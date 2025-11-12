@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.12.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.11.1...v1.12.0) (2025-11-12)
+
+
+### Features
+
+* update installation instructions and package naming for ARM64 and x64 support ([5a30266](https://github.com/The-Najm-Studios/qrcode-scanner/commit/5a3026689132f4785a10671f5df175552c12f12e))
+
 ## [1.11.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.11.0...v1.11.1) (2025-11-12)
 
 
