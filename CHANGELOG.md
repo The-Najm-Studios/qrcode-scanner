@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.3.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.2.0...v1.3.0) (2025-11-12)
+
+
+### Features
+
+* update semantic release configuration to remove npm publish step and enhance tag handling ([3d06ea8](https://github.com/The-Najm-Studios/qrcode-scanner/commit/3d06ea8f927fb47e0f492e9f320c59b64ba976a1))
+
 # [1.2.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.1.0...v1.2.0) (2025-11-12)
 
 
