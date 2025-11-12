@@ -223,6 +223,28 @@ app.whenReady().then(() => {
     return { success: false, error: 'Scanner not initialized' }
   })
 
+  // Fullscreen IPC handlers
+  ipcMain.handle('toggle-fullscreen', () => {
+    if (mainWindow) {
+      const isFullscreen = mainWindow.isFullScreen()
+      mainWindow.setFullScreen(!isFullscreen)
+      return !isFullscreen
+    }
+    return false
+  })
+
+  ipcMain.handle('set-fullscreen', (_, fullscreen: boolean) => {
+    if (mainWindow) {
+      mainWindow.setFullScreen(fullscreen)
+      return fullscreen
+    }
+    return false
+  })
+
+  ipcMain.handle('is-fullscreen', () => {
+    return mainWindow ? mainWindow.isFullScreen() : false
+  })
+
   // Initialize QR Scanner
   qrScanner = new GM60Scanner()
   qrScanner.onScan((data) => {

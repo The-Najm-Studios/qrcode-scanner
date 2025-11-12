@@ -35,6 +35,12 @@ const api = {
     removeQRListener: () => {
       ipcRenderer.removeAllListeners('qr-scanned')
     }
+  },
+  // Window/Fullscreen API
+  window: {
+    toggleFullscreen: () => ipcRenderer.invoke('toggle-fullscreen'),
+    setFullscreen: (fullscreen: boolean) => ipcRenderer.invoke('set-fullscreen', fullscreen),
+    isFullscreen: () => ipcRenderer.invoke('is-fullscreen')
   }
 }
 

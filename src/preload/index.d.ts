@@ -51,12 +51,19 @@ interface ScannerAPI {
   removeQRListener: () => void
 }
 
+interface WindowAPI {
+  toggleFullscreen: () => Promise<boolean>
+  setFullscreen: (fullscreen: boolean) => Promise<boolean>
+  isFullscreen: () => Promise<boolean>
+}
+
 declare global {
   interface Window {
     electron: ElectronAPI
     api: {
       updater: UpdaterAPI
       scanner: ScannerAPI
+      window: WindowAPI
     }
   }
 }
