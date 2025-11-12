@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.2.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.1.0...v1.2.0) (2025-11-12)
+
+
+### Features
+
+* add actions permission and enhance tag retrieval in semantic release workflow ([fddfd11](https://github.com/The-Najm-Studios/qrcode-scanner/commit/fddfd1177749682c8ea4074176056f741c3b4a5f))
+
 # [1.1.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.0.0...v1.1.0) (2025-11-12)
 
 
