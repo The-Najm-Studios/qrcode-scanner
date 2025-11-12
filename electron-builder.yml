@@ -11,6 +11,8 @@ files:
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
 asarUnpack:
   - resources/**
+  - node_modules/@serialport/**
+  - node_modules/**/*.node
 win:
   executableName: qrcode-scanner
 nsis:
@@ -54,7 +56,7 @@ deb:
   depends:
     - libgtk-3-0
     - libnss3
-npmRebuild: false
+npmRebuild: true
 publish:
   - provider: github
     owner: The-Najm-Studios
