@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.0.0...v1.1.0) (2025-11-12)
+
+
+### Features
+
+* remove unused Versions component and clean up App component ([9cdb513](https://github.com/The-Najm-Studios/qrcode-scanner/commit/9cdb513c43a131b23fe690aa914fbcb692a4f2b4))
+
 # 1.0.0 (2025-11-12)
 
 
