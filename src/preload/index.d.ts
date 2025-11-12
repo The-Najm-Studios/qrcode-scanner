@@ -11,11 +11,19 @@ interface UpdaterAPI {
   onError: (callback: (error: any) => void) => void
 }
 
+interface ScannerAPI {
+  getStatus: () => Promise<boolean>
+  sendCommand: (command: string) => Promise<{ success: boolean; error?: string }>
+  onQRScanned: (callback: (data: string) => void) => void
+  removeQRListener: () => void
+}
+
 declare global {
   interface Window {
     electron: ElectronAPI
     api: {
       updater: UpdaterAPI
+      scanner: ScannerAPI
     }
   }
 }

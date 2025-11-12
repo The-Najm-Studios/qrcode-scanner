@@ -23,6 +23,17 @@ const api = {
     onError: (callback: (error: any) => void) => {
       ipcRenderer.on('updater-error', (_event, error) => callback(error))
     }
+  },
+  // QR Scanner API
+  scanner: {
+    getStatus: () => ipcRenderer.invoke('scanner-status'),
+    sendCommand: (command: string) => ipcRenderer.invoke('scanner-send-command', command),
+    onQRScanned: (callback: (data: string) => void) => {
+      ipcRenderer.on('qr-scanned', (_event, data) => callback(data))
+    },
+    removeQRListener: () => {
+      ipcRenderer.removeAllListeners('qr-scanned')
+    }
   }
 }
 

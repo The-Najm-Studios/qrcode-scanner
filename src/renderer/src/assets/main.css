@@ -291,3 +291,184 @@ details summary {
 details[open] summary {
   margin-bottom: 4px;
 }
+
+/* QR Scanner Styles */
+.qr-display {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.scanner-status {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e9ecef;
+}
+
+.scanner-status h2 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.status-indicator.connected .status-dot {
+  background-color: #28a745;
+}
+
+.status-indicator.disconnected .status-dot {
+  background-color: #dc3545;
+}
+
+.status-indicator.connected {
+  color: #28a745;
+}
+
+.status-indicator.disconnected {
+  color: #dc3545;
+}
+
+.listener-status {
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.listener-status.listening {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.listener-status.not-listening {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.refresh-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.refresh-btn:hover {
+  background: #0056b3;
+}
+
+.scan-history {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 15px;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa;
+}
+
+.history-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.clear-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.clear-btn:hover {
+  background: #545b62;
+}
+
+.no-scans {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.no-scans p {
+  margin: 5px 0;
+}
+
+.scan-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.scan-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.scan-item:last-child {
+  border-bottom: none;
+}
+
+.scan-item:hover {
+  background-color: #f8f9fa;
+}
+
+.scan-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scan-data {
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.scan-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.scan-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.scan-text {
+  color: #333;
+}
+
+.scan-timestamp {
+  font-size: 12px;
+  color: #6c757d;
+}

@@ -1,10 +1,11 @@
 import UpdateNotification from './components/UpdateNotification'
+import QRDisplay from './components/QRDisplay'
 
 function App(): React.JSX.Element {
   return (
     <>
       <UpdateNotification />
-      <div className="text">Qrcode-scanning func comming soon...</div>
+      <QRDisplay />
     </>
   )
 }

@@ -2,12 +2,14 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
+import { GM60Scanner } from './gm60-scanner'
 import icon from '../../resources/icon.png?asset'
 
 // Configure auto-updater
 autoUpdater.checkForUpdatesAndNotify()
 
 let mainWindow: BrowserWindow
+let qrScanner: GM60Scanner
 
 // Auto-updater events
 autoUpdater.on('checking-for-update', () => {
@@ -122,6 +124,32 @@ app.whenReady().then(() => {
     }
   })
 
+  // QR Scanner IPC handlers
+  ipcMain.handle('scanner-status', () => {
+    return qrScanner ? qrScanner.isConnected() : false
+  })
+
+  ipcMain.handle('scanner-send-command', async (_, command: string) => {
+    if (qrScanner) {
+      try {
+        await qrScanner.sendCommand(command)
+        return { success: true }
+      } catch (error) {
+        return { success: false, error: error.message }
+      }
+    }
+    return { success: false, error: 'Scanner not initialized' }
+  })
+
+  // Initialize QR Scanner
+  qrScanner = new GM60Scanner()
+  qrScanner.onScan((data) => {
+    // Send scanned data to renderer
+    if (mainWindow) {
+      mainWindow.webContents.send('qr-scanned', data)
+    }
+  })
+
   createWindow()
 
   // Check for updates after app is ready (only in production)
@@ -141,7 +169,12 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
+  // Cleanup QR scanner
+  if (qrScanner) {
+    await qrScanner.disconnect()
+  }
+  
   if (process.platform !== 'darwin') {
     app.quit()
   }
