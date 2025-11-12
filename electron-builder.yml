@@ -15,12 +15,22 @@ asarUnpack:
   - node_modules/**/*.node
 win:
   executableName: qrcode-scanner
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
+  artifactName: ${name}.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
 mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
@@ -29,14 +39,12 @@ mac:
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   notarize: false
 dmg:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: ${name}.${ext}
 linux:
   target:
     - target: deb
       arch:
-        - arm64
-    - target: AppImage
-      arch:
+        - x64
         - arm64
   maintainer: The-Najm-Studios
   category: Utility
@@ -47,12 +55,12 @@ linux:
     Keywords: qr;scanner;camera;barcode;
   executableName: qrcode-scanner
 appImage:
-  artifactName: ${name}-${version}-arm64.${ext}
-  synopsis: QR Code Scanner for Raspberry Pi
+  artifactName: ${name}.${ext}
+  synopsis: QR Code Scanner
 deb:
-  artifactName: ${name}-${version}-arm64.${ext}
-  synopsis: QR Code Scanner for Raspberry Pi
-  description: A modern QR code scanner application with auto-update support, optimized for Raspberry Pi.
+  artifactName: ${name}.${ext}
+  synopsis: QR Code Scanner
+  description: A modern QR code scanner application with auto-update support.
   depends:
     - libgtk-3-0
     - libnss3
