@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.9.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.8.0...v1.9.0) (2025-11-12)
+
+
+### Features
+
+* Refactor FullscreenToggle and QRDisplay components to use new UI components ([350d9fd](https://github.com/The-Najm-Studios/qrcode-scanner/commit/350d9fd42c90e5ee5e7e5d36acf2a28e62eec4f7))
+
 # [1.8.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.7.0...v1.8.0) (2025-11-12)
 
 
