@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.5.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.7...v1.5.0) (2025-11-12)
+
+
+### Bug Fixes
+
+* styling ([d31daab](https://github.com/The-Najm-Studios/qrcode-scanner/commit/d31daab117cab98c6c81a53f33f0a1d9b49c8148))
+
+
+### Features
+
+* implement tab interface for QR scanner with scan and history views ([c2a970b](https://github.com/The-Najm-Studios/qrcode-scanner/commit/c2a970b8cc2921412d0cf4ee8dd19c8fd56f022a))
+
 ## [1.4.7](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.6...v1.4.7) (2025-11-12)
 
 
