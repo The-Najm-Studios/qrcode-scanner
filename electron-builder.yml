@@ -1,0 +1,66 @@
+appId: com.electron.app
+productName: qrcode-scanner
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asarUnpack:
+  - resources/**
+win:
+  executableName: qrcode-scanner
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - target: deb
+      arch:
+        - arm64
+    - target: AppImage
+      arch:
+        - arm64
+  maintainer: The-Najm-Studios
+  category: Utility
+  desktop:
+    Name: QR Code Scanner
+    Comment: Scan QR codes with your camera
+    Categories: Utility;Graphics;Photography;
+    Keywords: qr;scanner;camera;barcode;
+  executableName: qrcode-scanner
+appImage:
+  artifactName: ${name}-${version}-arm64.${ext}
+  synopsis: QR Code Scanner for Raspberry Pi
+deb:
+  artifactName: ${name}-${version}-arm64.${ext}
+  synopsis: QR Code Scanner for Raspberry Pi
+  description: A modern QR code scanner application with auto-update support, optimized for Raspberry Pi.
+  depends:
+    - libgtk-3-0
+    - libgconf-2-4
+    - libnss3
+    - libxss1
+    - libasound2
+  fpm:
+    - '--deb-field=Homepage: https://github.com/The-Najm-Studios/qrcode-scanner'
+npmRebuild: false
+publish:
+  provider: github
+  owner: The-Najm-Studios
+  repo: qrcode-scanner

@@ -1,0 +1,4 @@
+provider: github
+owner: The-Najm-Studios
+repo: qrcode-scanner
+updaterCacheDirName: qrcode-scanner-updater
