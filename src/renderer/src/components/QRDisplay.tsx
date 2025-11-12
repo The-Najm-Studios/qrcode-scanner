@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import { Card } from './ui/card'
+import { Button } from './ui/button'
+import { ScrollArea } from './ui/scroll-area'
 
 interface QRScanData {
   data: string
@@ -15,10 +18,8 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
   const [isListening, setIsListening] = useState<boolean>(false)
 
   useEffect(() => {
-    // Check scanner status on mount
     checkScannerStatus()
 
-    // Set up QR scan listener
     if (window.api?.scanner) {
       window.api.scanner.onQRScanned((data: string) => {
         console.log('QR Code received:', data)
@@ -26,12 +27,11 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
           data: data,
           timestamp: new Date()
         }
-        setScanHistory((prev) => [newScan, ...prev.slice(0, 19)]) // Keep last 20 scans
+        setScanHistory((prev) => [newScan, ...prev.slice(0, 19)])
       })
       setIsListening(true)
     }
 
-    // Cleanup listener on unmount
     return () => {
       if (window.api?.scanner) {
         window.api.scanner.removeQRListener()
@@ -72,11 +72,9 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
   }
 
   const openLink = (url: string) => {
-    // Check if it's a valid URL
     try {
       const parsedUrl = new URL(url)
       if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
-        // Use window.open as fallback for external links
         window.open(url, '_blank')
       }
     } catch (error) {
@@ -107,110 +105,129 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
   }
 
   const renderScanTab = () => (
-    <div className="scan-tab">
-      <div className="scanner-status">
-        <h2>📱 GM60 QR Scanner</h2>
-        <div className={`status-indicator ${scannerStatus ? 'connected' : 'disconnected'}`}>
-          <span className="status-dot"></span>
-          {scannerStatus ? 'Connected' : 'Disconnected'}
+    <div className="flex flex-col gap-2 p-2 h-full">
+      <Card className="p-2 border-l-4 border-l-primary">
+        <div className="space-y-1">
+          <h2 className="text-[11px] font-semibold text-foreground">📱 GM60 Scanner</h2>
+          <div className="flex items-center gap-1">
+            <div className={`w-1.5 h-1.5 rounded-full ${scannerStatus ? 'bg-green-500' : 'bg-red-500'}`}></div>
+            <span className={`text-[9px] ${scannerStatus ? 'text-green-600' : 'text-red-600'}`}>
+              {scannerStatus ? 'Connected' : 'Disconnected'}
+            </span>
+          </div>
+          <div className="text-[9px] text-muted-foreground">
+            {isListening ? '🎧 Listening...' : '❌ Not listening'}
+          </div>
+          <Button
+            onClick={reconnectScanner}
+            size="sm"
+            className="h-5 px-2 text-[8px] mt-1"
+          >
+            🔄 {scannerStatus ? 'Refresh' : 'Reconnect'}
+          </Button>
         </div>
-        <div className={`listener-status ${isListening ? 'listening' : 'not-listening'}`}>
-          {isListening ? '🎧 Listening for scans...' : '❌ Not listening'}
-        </div>
-        <button onClick={reconnectScanner} className="refresh-btn">
-          🔄 {scannerStatus ? 'Refresh' : 'Reconnect'}
-        </button>
-      </div>
+      </Card>
 
       {scanHistory.length > 0 && (
-        <div className="latest-scan">
-          <h3>🔍 Latest Scan</h3>
-          <div className="scan-item latest">
-            <div className="scan-content">
-              <div className="scan-data">
-                {isValidUrl(scanHistory[0].data) ? (
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      openLink(scanHistory[0].data)
-                    }}
-                    className="scan-link"
-                    title="Click to open in browser"
-                  >
-                    🔗 {scanHistory[0].data}
-                  </a>
-                ) : (
-                  <span className="scan-text">📝 {scanHistory[0].data}</span>
-                )}
-              </div>
-              <div className="scan-timestamp">⏰ {formatTimestamp(scanHistory[0].timestamp)}</div>
+        <Card className="p-2 bg-green-50 border-green-200">
+          <h3 className="text-[10px] font-semibold text-green-700 mb-1">🔍 Latest Scan</h3>
+          <div className="space-y-0.5">
+            <div className="text-[9px] overflow-hidden text-ellipsis whitespace-nowrap">
+              {isValidUrl(scanHistory[0].data) ? (
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    openLink(scanHistory[0].data)
+                  }}
+                  className="text-blue-600 hover:underline"
+                >
+                  🔗 {scanHistory[0].data}
+                </a>
+              ) : (
+                <span className="text-gray-800">📝 {scanHistory[0].data}</span>
+              )}
+            </div>
+            <div className="text-[7px] text-muted-foreground">
+              ⏰ {formatTimestamp(scanHistory[0].timestamp)}
             </div>
           </div>
-        </div>
+        </Card>
       )}
 
-      <div className="scan-instructions">
-        <h3>📋 Instructions</h3>
-        <ul>
-          <li>🔌 GM60 is hardwired to UART</li>
-          <li>📷 Point at QR code to scan</li>
-          <li>✨ Data appears automatically</li>
-          {!scannerStatus && <li>⚠️ Try "Reconnect" if disconnected</li>}
+      <Card className="flex-1 p-2 border-l-4 border-l-blue-500 overflow-hidden">
+        <h3 className="text-[10px] font-semibold text-blue-600 mb-1">📋 Instructions</h3>
+        <ul className="text-[8px] space-y-0.5 text-foreground">
+          <li>• 🔌 GM60 hardwired to UART</li>
+          <li>• 📷 Point at QR code to scan</li>
+          <li>• ✨ Data appears automatically</li>
+          {!scannerStatus && <li>• ⚠️ Try "Reconnect" if disconnected</li>}
         </ul>
-      </div>
+      </Card>
     </div>
   )
 
   const renderHistoryTab = () => (
-    <div className="history-tab">
-      <div className="history-header">
-        <h3>📋 Scan History</h3>
+    <div className="flex flex-col h-full p-2">
+      <div className="flex justify-between items-center pb-1 border-b border-border mb-2">
+        <h3 className="text-[11px] font-semibold text-foreground">📋 Scan History</h3>
         {scanHistory.length > 0 && (
-          <button onClick={clearHistory} className="clear-btn">
-            🗑️ Clear All
-          </button>
+          <Button
+            onClick={clearHistory}
+            variant="destructive"
+            size="sm"
+            className="h-5 px-2 text-[7px]"
+          >
+            🗑️ Clear
+          </Button>
         )}
       </div>
 
       {scanHistory.length === 0 ? (
-        <div className="no-scans">
-          <p>🔍 No QR codes scanned yet</p>
-          <p>Switch to the "Scan QR Code" tab and scan something!</p>
+        <div className="flex-1 flex items-center justify-center text-center text-muted-foreground">
+          <div className="space-y-1">
+            <p className="text-[10px]">🔍 No QR codes scanned yet</p>
+            <p className="text-[8px]">Switch to "Scan" tab to start!</p>
+          </div>
         </div>
       ) : (
-        <div className="scan-list">
-          {scanHistory.map((scan, index) => (
-            <div key={index} className="scan-item">
-              <div className="scan-content">
-                <div className="scan-data">
-                  {isValidUrl(scan.data) ? (
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        openLink(scan.data)
-                      }}
-                      className="scan-link"
-                      title="Click to open in browser"
-                    >
-                      🔗 {scan.data}
-                    </a>
-                  ) : (
-                    <span className="scan-text">📝 {scan.data}</span>
-                  )}
+        <ScrollArea className="flex-1">
+          <div className="space-y-1">
+            {scanHistory.map((scan, index) => (
+              <Card key={index} className="p-2 hover:bg-muted/50 transition-colors">
+                <div className="space-y-0.5">
+                  <div className="text-[9px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    {isValidUrl(scan.data) ? (
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          openLink(scan.data)
+                        }}
+                        className="text-blue-600 hover:underline"
+                      >
+                        🔗 {scan.data}
+                      </a>
+                    ) : (
+                      <span className="text-foreground">📝 {scan.data}</span>
+                    )}
+                  </div>
+                  <div className="text-[7px] text-muted-foreground">
+                    ⏰ {formatTimestamp(scan.timestamp)}
+                  </div>
                 </div>
-                <div className="scan-timestamp">⏰ {formatTimestamp(scan.timestamp)}</div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </Card>
+            ))}
+          </div>
+        </ScrollArea>
       )}
     </div>
   )
 
   return (
-    <div className="qr-display">{activeTab === 'scan' ? renderScanTab() : renderHistoryTab()}</div>
+    <div className="h-full w-full">
+      {activeTab === 'scan' ? renderScanTab() : renderHistoryTab()}
+    </div>
   )
 }
 

@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
+import { Button } from './ui/button'
 
 const FullscreenToggle = () => {
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
-    // Check initial fullscreen state
     const checkFullscreenState = async () => {
       if (window.api?.window) {
         const fullscreen = await window.api.window.isFullscreen()
         setIsFullscreen(fullscreen)
       }
     }
-
     checkFullscreenState()
   }, [])
 
@@ -38,16 +37,16 @@ const FullscreenToggle = () => {
   }
 
   return (
-    <div className="fullscreen-toggle">
-      {isFullscreen ? (
-        <button onClick={exitFullscreen} className="fullscreen-btn exit" title="Exit Fullscreen">
-          🔲
-        </button>
-      ) : (
-        <button onClick={enterFullscreen} className="fullscreen-btn enter" title="Enter Fullscreen">
-          ⛶
-        </button>
-      )}
+    <div className="flex gap-0.5 px-1">
+      <Button
+        onClick={isFullscreen ? exitFullscreen : enterFullscreen}
+        variant="ghost"
+        size="sm"
+        className="h-6 px-2 text-[8px]"
+        title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+      >
+        {isFullscreen ? '🔲' : '⛶'}
+      </Button>
     </div>
   )
 }

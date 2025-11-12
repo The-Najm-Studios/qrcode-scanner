@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import { Alert, AlertDescription, AlertTitle } from './ui/alert'
+import { Button } from './ui/button'
+import { Progress } from './ui/progress'
 
 interface UpdateInfo {
   version: string
@@ -25,7 +28,6 @@ const UpdateNotification = () => {
   useEffect(() => {
     if (!window.api?.updater) return
 
-    // Set up event listeners
     window.api.updater.onUpdateAvailable((info: UpdateInfo) => {
       setUpdateAvailable(true)
       setUpdateInfo(info)
@@ -88,89 +90,125 @@ const UpdateNotification = () => {
 
   if (error) {
     return (
-      <div className="update-notification error">
-        <p>⚠️ Update Error: {error}</p>
-        <button onClick={() => setError(null)}>Dismiss</button>
-      </div>
+      <Alert variant="destructive" className="fixed top-1 left-1 right-1 z-50 p-2 text-[8px]">
+        <AlertTitle className="text-[9px] mb-1">⚠️ Update Error</AlertTitle>
+        <AlertDescription className="text-[8px]">{error}</AlertDescription>
+        <Button
+          onClick={() => setError(null)}
+          variant="outline"
+          size="sm"
+          className="mt-2 h-5 px-2 text-[7px]"
+        >
+          Dismiss
+        </Button>
+      </Alert>
     )
   }
 
   if (installing) {
     return (
-      <div className="update-notification installing">
-        <h3>⚙️ Installing Update...</h3>
-        <div className="spinner"></div>
-        <p>Installing update and restarting application...</p>
-        <p>
-          <small>This may take a few moments</small>
-        </p>
-      </div>
+      <Alert className="fixed top-1 left-1 right-1 z-50 p-2 text-center border-yellow-500 bg-yellow-50 text-yellow-800">
+        <AlertTitle className="text-[9px] mb-1">⚙️ Installing Update...</AlertTitle>
+        <div className="flex justify-center my-2">
+          <div className="w-4 h-4 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+        <AlertDescription className="text-[7px]">
+          Installing update and restarting application...
+        </AlertDescription>
+      </Alert>
     )
   }
 
   if (updateReady) {
     return (
-      <div className="update-notification ready">
-        <h3>🎉 Update Ready!</h3>
-        <p>Version {updateInfo?.version} has been downloaded and is ready to install.</p>
-        <div className="update-buttons">
-          <button onClick={handleInstallUpdate}>Install Now & Restart</button>
-          <button onClick={() => setUpdateReady(false)}>Install Later</button>
+      <Alert className="fixed top-1 left-1 right-1 z-50 p-2 border-green-500 bg-green-50 text-green-800">
+        <AlertTitle className="text-[9px] mb-1">🎉 Update Ready!</AlertTitle>
+        <AlertDescription className="text-[8px] mb-2">
+          Version {updateInfo?.version} has been downloaded and is ready to install.
+        </AlertDescription>
+        <div className="flex gap-1">
+          <Button
+            onClick={handleInstallUpdate}
+            size="sm"
+            className="h-5 px-2 text-[7px] bg-green-600 hover:bg-green-700"
+          >
+            Install Now
+          </Button>
+          <Button
+            onClick={() => setUpdateReady(false)}
+            variant="outline"
+            size="sm"
+            className="h-5 px-2 text-[7px]"
+          >
+            Later
+          </Button>
         </div>
-      </div>
+      </Alert>
     )
   }
 
   if (downloading && downloadProgress) {
     return (
-      <div className="update-notification downloading">
-        <h3>⬇️ Downloading Update...</h3>
-        <div className="spinner"></div>
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${downloadProgress.percent}%` }}></div>
-        </div>
-        <p>
+      <Alert className="fixed top-1 left-1 right-1 z-50 p-2 text-center border-blue-500 bg-blue-50 text-blue-800">
+        <AlertTitle className="text-[9px] mb-1">⬇️ Downloading Update...</AlertTitle>
+        <Progress value={downloadProgress.percent} className="h-1 my-2" />
+        <AlertDescription className="text-[7px]">
           {Math.round(downloadProgress.percent)}% -{' '}
           {(downloadProgress.bytesPerSecond / 1024 / 1024).toFixed(2)} MB/s
-        </p>
-      </div>
+        </AlertDescription>
+      </Alert>
     )
   }
 
   if (downloading && !downloadProgress) {
     return (
-      <div className="update-notification downloading">
-        <h3>⬇️ Preparing Download...</h3>
-        <div className="spinner"></div>
-        <p>Initializing update download...</p>
-      </div>
+      <Alert className="fixed top-1 left-1 right-1 z-50 p-2 text-center border-blue-500 bg-blue-50 text-blue-800">
+        <AlertTitle className="text-[9px] mb-1">⬇️ Preparing Download...</AlertTitle>
+        <div className="flex justify-center my-2">
+          <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </Alert>
     )
   }
 
   if (updateAvailable) {
     return (
-      <div className="update-notification available">
-        <h3>🚀 Update Available!</h3>
-        <p>Version {updateInfo?.version} is now available.</p>
-        {updateInfo?.releaseNotes && (
-          <details>
-            <summary>Release Notes</summary>
-            <p>{updateInfo.releaseNotes}</p>
-          </details>
-        )}
-        <div className="update-buttons">
-          <button onClick={handleDownloadUpdate}>Download Update</button>
-          <button onClick={() => setUpdateAvailable(false)}>Later</button>
+      <Alert className="fixed top-1 left-1 right-1 z-50 p-2 border-blue-500 bg-blue-50 text-blue-800">
+        <AlertTitle className="text-[9px] mb-1">🚀 Update Available!</AlertTitle>
+        <AlertDescription className="text-[8px] mb-2">
+          Version {updateInfo?.version} is now available.
+        </AlertDescription>
+        <div className="flex gap-1">
+          <Button
+            onClick={handleDownloadUpdate}
+            size="sm"
+            className="h-5 px-2 text-[7px] bg-blue-600 hover:bg-blue-700"
+          >
+            Download
+          </Button>
+          <Button
+            onClick={() => setUpdateAvailable(false)}
+            variant="outline"
+            size="sm"
+            className="h-5 px-2 text-[7px]"
+          >
+            Later
+          </Button>
         </div>
-      </div>
+      </Alert>
     )
   }
 
   return (
-    <div className="update-notification hidden">
-      <button onClick={handleCheckForUpdates} className="check-updates-btn">
+    <div className="relative p-2">
+      <Button
+        onClick={handleCheckForUpdates}
+        variant="outline"
+        size="sm"
+        className="h-5 px-2 text-[7px]"
+      >
         Check for Updates
-      </button>
+      </Button>
     </div>
   )
 }
