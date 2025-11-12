@@ -22,7 +22,7 @@ const QRDisplay = () => {
           data: data,
           timestamp: new Date()
         }
-        setScanHistory(prev => [newScan, ...prev.slice(0, 19)]) // Keep last 20 scans
+        setScanHistory((prev) => [newScan, ...prev.slice(0, 19)]) // Keep last 20 scans
       })
       setIsListening(true)
     }
@@ -71,7 +71,7 @@ const QRDisplay = () => {
   }
 
   const formatTimestamp = (date: Date): string => {
-    return date.toLocaleTimeString('en-US', { 
+    return date.toLocaleTimeString('en-US', {
       hour12: false,
       hour: '2-digit',
       minute: '2-digit',
@@ -121,9 +121,12 @@ const QRDisplay = () => {
                 <div className="scan-content">
                   <div className="scan-data">
                     {isValidUrl(scan.data) ? (
-                      <a 
-                        href="#" 
-                        onClick={(e) => { e.preventDefault(); openLink(scan.data) }}
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          openLink(scan.data)
+                        }}
                         className="scan-link"
                         title="Click to open in browser"
                       >
@@ -133,9 +136,7 @@ const QRDisplay = () => {
                       <span className="scan-text">📝 {scan.data}</span>
                     )}
                   </div>
-                  <div className="scan-timestamp">
-                    ⏰ {formatTimestamp(scan.timestamp)}
-                  </div>
+                  <div className="scan-timestamp">⏰ {formatTimestamp(scan.timestamp)}</div>
                 </div>
               </div>
             ))}

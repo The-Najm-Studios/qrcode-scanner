@@ -174,7 +174,7 @@ app.on('window-all-closed', async () => {
   if (qrScanner) {
     await qrScanner.disconnect()
   }
-  
+
   if (process.platform !== 'darwin') {
     app.quit()
   }

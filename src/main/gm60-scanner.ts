@@ -14,20 +14,20 @@ export class GM60Scanner {
     try {
       // Common UART paths on Raspberry Pi
       const possiblePaths = [
-        '/dev/ttyAMA0',  // Primary UART on Pi
-        '/dev/ttyS0',    // Secondary UART
-        '/dev/serial0',  // Symlink to primary UART
-        '/dev/serial1'   // Symlink to secondary UART
+        '/dev/ttyAMA0', // Primary UART on Pi
+        '/dev/ttyS0', // Secondary UART
+        '/dev/serial0', // Symlink to primary UART
+        '/dev/serial1' // Symlink to secondary UART
       ]
 
       let portPath = null
-      
+
       // Try to find available port
       const { SerialPort } = await import('serialport')
       const ports = await SerialPort.list()
-      
+
       for (const path of possiblePaths) {
-        const exists = ports.some(port => port.path === path)
+        const exists = ports.some((port) => port.path === path)
         if (exists) {
           portPath = path
           break
@@ -44,7 +44,7 @@ export class GM60Scanner {
 
       this.port = new SerialPort({
         path: portPath,
-        baudRate: 9600,  // Default baud rate for GM60
+        baudRate: 9600, // Default baud rate for GM60
         dataBits: 8,
         stopBits: 1,
         parity: 'none'
@@ -67,7 +67,6 @@ export class GM60Scanner {
           this.onDataCallback(scannedData)
         }
       })
-
     } catch (error) {
       console.error('Failed to initialize GM60 scanner:', error)
     }
