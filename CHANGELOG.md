@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.3](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.2...v1.4.3) (2025-11-12)
+
+
+### Bug Fixes
+
+* update dependencies for deb package in electron-builder.yml ([5be0930](https://github.com/The-Najm-Studios/qrcode-scanner/commit/5be0930e2e2a69a0ce1168005bf270f31abff8e8))
+
 ## [1.4.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.1...v1.4.2) (2025-11-12)
 
 
