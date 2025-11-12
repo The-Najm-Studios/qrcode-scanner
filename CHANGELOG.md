@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.7](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.6...v1.4.7) (2025-11-12)
+
+
+### Bug Fixes
+
+* enhance error handling for GM60 scanner initialization and command execution ([9b86c1c](https://github.com/The-Najm-Studios/qrcode-scanner/commit/9b86c1cb2ce43ca5c15ba9683ce4c633bdab9b1b))
+
 ## [1.4.6](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.5...v1.4.6) (2025-11-12)
 
 
