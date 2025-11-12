@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.4.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.3.1...v1.4.0) (2025-11-12)
+
+
+### Bug Fixes
+
+* improve code formatting and consistency in setup guide and scanner files ([6e651ef](https://github.com/The-Najm-Studios/qrcode-scanner/commit/6e651efa1d3c65b9b00c8c976f2a6ec2bcd5b221))
+
+
+### Features
+
+* Integrate GM60 QR Scanner functionality ([12c4f19](https://github.com/The-Najm-Studios/qrcode-scanner/commit/12c4f191c7317f6e1557ee157b5c7a6a3f9ae53f))
+
 ## [1.3.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.3.0...v1.3.1) (2025-11-12)
 
 
