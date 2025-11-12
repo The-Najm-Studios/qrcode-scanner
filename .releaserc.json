@@ -4,7 +4,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "conventionalcommits",
+        "preset": "angular",
         "releaseRules": [
           { "type": "feat", "release": "minor" },
           { "type": "fix", "release": "patch" },
@@ -25,17 +25,7 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "conventionalcommits",
-        "presetConfig": {
-          "types": [
-            { "type": "feat", "section": "🚀 Features" },
-            { "type": "fix", "section": "🐛 Bug Fixes" },
-            { "type": "perf", "section": "⚡ Performance Improvements" },
-            { "type": "revert", "section": "⏪ Reverts" },
-            { "type": "refactor", "section": "♻️ Code Refactoring" },
-            { "type": "security", "section": "🔒 Security" }
-          ]
-        }
+        "preset": "angular"
       }
     ],
     [
