@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.3.0...v1.3.1) (2025-11-12)
+
+
+### Bug Fixes
+
+* correct indentation in semantic release workflow outputs ([89a0311](https://github.com/The-Najm-Studios/qrcode-scanner/commit/89a0311ef0ea21dda753a6c24bb3c08bd01f2794))
+* update semantic release workflow to correctly handle tag creation and retrieval ([98acffc](https://github.com/The-Najm-Studios/qrcode-scanner/commit/98acffc7679d7c2bc87b91781859486d1db6bc5f))
+
 # [1.3.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.2.0...v1.3.0) (2025-11-12)
 
 
