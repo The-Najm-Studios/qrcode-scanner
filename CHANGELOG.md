@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.6](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.5...v1.4.6) (2025-11-12)
+
+
+### Bug Fixes
+
+* improve comments and configuration for GM60 scanner UART paths ([fd67fe9](https://github.com/The-Najm-Studios/qrcode-scanner/commit/fd67fe9140415fad7fb2ea53f2279812b3435619))
+
 ## [1.4.5](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.4...v1.4.5) (2025-11-12)
 
 
