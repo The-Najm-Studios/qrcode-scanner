@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.5](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.4...v1.4.5) (2025-11-12)
+
+
+### Bug Fixes
+
+* update release workflow and electron-builder configuration for improved publishing ([7a036c4](https://github.com/The-Najm-Studios/qrcode-scanner/commit/7a036c4813f662677de212e3c3a372a24271bd08))
+
 ## [1.4.4](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.3...v1.4.4) (2025-11-12)
 
 
