@@ -1,4 +1,4 @@
-name: Release for Raspberry Pi
+name: Build and Release Assets
 
 on:
   push:
@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release'
+        description: 'Version to release (e.g., v1.0.0)'
         required: true
         default: 'v1.0.0'
 
 jobs:
-  release:
+  build-and-release:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,12 +33,39 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get tag name
+        id: get_tag
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "tag_name=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
+          tag_name: ${{ steps.get_tag.outputs.tag_name }}
+          name: ${{ steps.get_tag.outputs.tag_name }}
           files: |
             dist/*.deb
             dist/*.AppImage
+          body: |
+            ## QR Code Scanner for Raspberry Pi
+            
+            ### 📦 Installation Files
+            - **qrcode-scanner-*-arm64.deb**: Debian package for Raspberry Pi OS
+            - **qrcode-scanner-*-arm64.AppImage**: Portable executable
+            
+            ### 🍓 Raspberry Pi Installation
+            ```bash
+            # Download and install .deb package
+            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner-*-arm64.deb
+            sudo dpkg -i qrcode-scanner-*-arm64.deb
+            sudo apt-get install -f
+            ```
+            
+            ### ✨ Auto-Updates
+            This version includes automatic update checking. Your app will notify you when new versions are available.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
