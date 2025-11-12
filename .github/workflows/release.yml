@@ -62,29 +62,28 @@ jobs:
         with:
           tag_name: ${{ steps.get_tag.outputs.tag_name }}
           body: |
-            ## QR Code Scanner for Raspberry Pi
+            ## QR Code Scanner
 
             ### 📦 Installation Files
-            - **qrcode-scanner-*-arm64.deb**: Debian package for Raspberry Pi OS
-            - **qrcode-scanner-*-arm64.AppImage**: Portable executable
+            - **qrcode-scanner.deb**: Debian package for Linux/Raspberry Pi OS
+            - **qrcode-scanner.exe**: Windows installer
+            - **qrcode-scanner.dmg**: macOS disk image
 
-            ### 🍓 Raspberry Pi Installation
+            ### 🍓 Raspberry Pi / Linux Installation
             ```bash
             # Download and install .deb package
-            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner-*-arm64.deb
-            sudo dpkg -i qrcode-scanner-*-arm64.deb
+            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner.deb
+            sudo dpkg -i qrcode-scanner.deb
             sudo apt-get install -f
             ```
 
+            ### 💻 Windows Installation
+            Download and run `qrcode-scanner.exe`
+
+            ### 🍎 macOS Installation
+            Download and open `qrcode-scanner.dmg`
+
             ### ✨ Auto-Updates
             This version includes automatic update checking. Your app will notify you when new versions are available.
-
-            ### 📱 AppImage Alternative
-            ```bash
-            # Download AppImage
-            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner-*-arm64.AppImage
-            chmod +x qrcode-scanner-*-arm64.AppImage
-            ./qrcode-scanner-*-arm64.AppImage
-            ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
