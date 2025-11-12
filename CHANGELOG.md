@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.6.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.5.0...v1.6.0) (2025-11-12)
+
+
+### Features
+
+* add reconnect functionality for GM60 scanner and improve error handling ([791105b](https://github.com/The-Najm-Studios/qrcode-scanner/commit/791105b083be17f60d84bff6080b54ba33917a7f))
+* enhance update notifications with spinner and install state management ([d8f4651](https://github.com/The-Najm-Studios/qrcode-scanner/commit/d8f465107a31e4b5c45672e72fa4c750c5b10715))
+
 # [1.5.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.7...v1.5.0) (2025-11-12)
 
 
