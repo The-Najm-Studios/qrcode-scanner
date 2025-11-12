@@ -12,12 +12,12 @@ export class GM60Scanner {
 
   private async initializeScanner() {
     try {
-      // Common UART paths on Raspberry Pi
+      // Common UART paths on Raspberry Pi (for hardwired GM60)
       const possiblePaths = [
-        '/dev/ttyAMA0', // Primary UART on Pi
-        '/dev/ttyS0', // Secondary UART
-        '/dev/serial0', // Symlink to primary UART
-        '/dev/serial1' // Symlink to secondary UART
+        '/dev/serial0', // Primary UART symlink (recommended for hardwired)
+        '/dev/ttyAMA0', // Primary UART on Pi 4/5
+        '/dev/ttyS0', // Mini UART (Pi 3/Zero)
+        '/dev/serial1' // Secondary UART symlink
       ]
 
       let portPath = null
@@ -44,10 +44,14 @@ export class GM60Scanner {
 
       this.port = new SerialPort({
         path: portPath,
-        baudRate: 9600, // Default baud rate for GM60
+        baudRate: 9600, // Standard GM60 baud rate
         dataBits: 8,
         stopBits: 1,
-        parity: 'none'
+        parity: 'none',
+        // Add flow control settings for hardware UART
+        rtscts: false,
+        xon: false,
+        xoff: false
       })
 
       this.parser = this.port.pipe(new ReadlineParser({ delimiter: '\r\n' }))
