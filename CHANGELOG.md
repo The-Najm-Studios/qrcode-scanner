@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.10.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.9.0...v1.10.0) (2025-11-12)
+
+
+### Features
+
+* Update electron-builder configuration to support multiple architectures and improve artifact naming ([28e4a20](https://github.com/The-Najm-Studios/qrcode-scanner/commit/28e4a20a38606900c070f0c42f03a5a25276f418))
+
 # [1.9.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.8.0...v1.9.0) (2025-11-12)
 
 
