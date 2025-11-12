@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.0...v1.4.1) (2025-11-12)
+
+
+### Bug Fixes
+
+* remove unused fpm configuration from electron-builder.yml ([d21b5cd](https://github.com/The-Najm-Studios/qrcode-scanner/commit/d21b5cd106fa7fdf494a7dd3eb96b586a12019d9))
+* update homepage URL in package.json to point to the correct repository ([e2746fb](https://github.com/The-Najm-Studios/qrcode-scanner/commit/e2746fbcc328bd761eeafe843d03464ddaeb25ec))
+
 # [1.4.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.3.1...v1.4.0) (2025-11-12)
 
 
