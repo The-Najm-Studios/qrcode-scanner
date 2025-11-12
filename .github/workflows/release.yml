@@ -65,15 +65,24 @@ jobs:
             ## QR Code Scanner
 
             ### 📦 Installation Files
-            - **qrcode-scanner.deb**: Debian package for Linux/Raspberry Pi OS
+            - **qrcode-scanner-arm64.deb**: Debian package for Raspberry Pi OS (ARM64)
+            - **qrcode-scanner-x64.deb**: Debian package for Linux (x64)
             - **qrcode-scanner.exe**: Windows installer
             - **qrcode-scanner.dmg**: macOS disk image
 
-            ### 🍓 Raspberry Pi / Linux Installation
+            ### 🍓 Raspberry Pi Installation
             ```bash
-            # Download and install .deb package
-            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner.deb
-            sudo dpkg -i qrcode-scanner.deb
+            # Download and install ARM64 .deb package
+            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner-arm64.deb
+            sudo dpkg -i qrcode-scanner-arm64.deb
+            sudo apt-get install -f
+            ```
+
+            ### 🐧 Linux (x64) Installation
+            ```bash
+            # Download and install x64 .deb package
+            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner-x64.deb
+            sudo dpkg -i qrcode-scanner-x64.deb
             sudo apt-get install -f
             ```
 

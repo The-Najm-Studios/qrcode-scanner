@@ -58,7 +58,7 @@ appImage:
   artifactName: ${name}.${ext}
   synopsis: QR Code Scanner
 deb:
-  artifactName: ${name}.${ext}
+  artifactName: ${name}-${arch}.${ext}
   synopsis: QR Code Scanner
   description: A modern QR code scanner application with auto-update support.
   depends:
