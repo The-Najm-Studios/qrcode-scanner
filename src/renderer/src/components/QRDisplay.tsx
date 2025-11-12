@@ -58,7 +58,7 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
         console.log('Attempting to reconnect to GM60 scanner...')
         const result = await window.api.scanner.reconnect()
         setScannerStatus(result.connected)
-        
+
         if (result.success) {
           console.log('Scanner reconnection successful')
         } else {

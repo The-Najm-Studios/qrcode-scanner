@@ -77,7 +77,7 @@ export class GM60Scanner {
 
       this.port.on('error', (err) => {
         console.error('Serial port error:', err.message)
-        
+
         if (err.message.includes('No such file or directory')) {
           console.warn('UART device not found. For hardwired GM60:')
           console.warn('1. Enable UART: sudo raspi-config -> Interface Options -> Serial')
@@ -90,7 +90,7 @@ export class GM60Scanner {
           console.warn('sudo usermod -a -G dialout $USER')
           console.warn('Then logout and login again')
         }
-        
+
         // Don't reject immediately - the port might still work for scanning
       })
 
@@ -140,11 +140,11 @@ export class GM60Scanner {
       if (this.port && this.port.isOpen) {
         await this.disconnect()
       }
-      
+
       await this.initializeScanner()
-      
+
       // Wait a bit and check if connection succeeded
-      await new Promise(resolve => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500))
       return this.isConnected()
     } catch (error) {
       console.error('Failed to reconnect to GM60 scanner:', error)

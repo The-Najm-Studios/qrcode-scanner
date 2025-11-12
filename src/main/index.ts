@@ -19,21 +19,38 @@ autoUpdater.on('checking-for-update', () => {
 autoUpdater.on('update-available', (info) => {
   console.log('Update available:', info)
   if (mainWindow) {
-    mainWindow.webContents.send('update-available', info)
+    // Send only serializable data
+    const sanitizedInfo = {
+      version: info.version,
+      releaseDate: info.releaseDate,
+      releaseName: info.releaseName,
+      releaseNotes: info.releaseNotes
+    }
+    mainWindow.webContents.send('update-available', sanitizedInfo)
   }
 })
 
 autoUpdater.on('update-not-available', (info) => {
   console.log('Update not available:', info)
   if (mainWindow) {
-    mainWindow.webContents.send('update-not-available', info)
+    // Send only serializable data
+    const sanitizedInfo = {
+      version: info.version,
+      releaseDate: info.releaseDate
+    }
+    mainWindow.webContents.send('update-not-available', sanitizedInfo)
   }
 })
 
 autoUpdater.on('error', (err) => {
   console.log('Error in auto-updater:', err)
   if (mainWindow) {
-    mainWindow.webContents.send('updater-error', err)
+    // Send only the error message, not the full error object
+    const sanitizedError = {
+      message: err instanceof Error ? err.message : 'Unknown error',
+      name: err instanceof Error ? err.name : 'Error'
+    }
+    mainWindow.webContents.send('updater-error', sanitizedError)
   }
 })
 
@@ -43,14 +60,28 @@ autoUpdater.on('download-progress', (progressObj) => {
   log_message = log_message + ` (${progressObj.transferred}/${progressObj.total})`
   console.log(log_message)
   if (mainWindow) {
-    mainWindow.webContents.send('download-progress', progressObj)
+    // This object should already be serializable, but ensure clean structure
+    const sanitizedProgress = {
+      bytesPerSecond: progressObj.bytesPerSecond,
+      percent: progressObj.percent,
+      transferred: progressObj.transferred,
+      total: progressObj.total
+    }
+    mainWindow.webContents.send('download-progress', sanitizedProgress)
   }
 })
 
 autoUpdater.on('update-downloaded', (info) => {
   console.log('Update downloaded:', info)
   if (mainWindow) {
-    mainWindow.webContents.send('update-downloaded', info)
+    // Send only serializable data
+    const sanitizedInfo = {
+      version: info.version,
+      releaseDate: info.releaseDate,
+      releaseName: info.releaseName,
+      releaseNotes: info.releaseNotes
+    }
+    mainWindow.webContents.send('update-downloaded', sanitizedInfo)
   }
 })
 
@@ -106,16 +137,49 @@ app.whenReady().then(() => {
   // Auto-updater IPC handlers
   ipcMain.handle('check-for-updates', async () => {
     if (!is.dev) {
-      return await autoUpdater.checkForUpdates()
+      try {
+        const result = await autoUpdater.checkForUpdates()
+        // Extract only serializable data to avoid cloning errors
+        return {
+          updateInfo: result ? {
+            version: result.updateInfo?.version,
+            files: result.updateInfo?.files?.map(file => ({
+              url: file.url,
+              sha512: file.sha512,
+              size: file.size
+            })),
+            path: result.updateInfo?.path,
+            sha512: result.updateInfo?.sha512,
+            releaseDate: result.updateInfo?.releaseDate
+          } : null,
+          cancellationToken: null, // Don't send the cancellation token
+          versionInfo: result ? {
+            version: result.updateInfo?.version
+          } : null
+        }
+      } catch (error) {
+        console.error('Error checking for updates:', error)
+        return { error: error instanceof Error ? error.message : 'Unknown error' }
+      }
     }
     return null
   })
 
   ipcMain.handle('download-update', async () => {
     if (!is.dev) {
-      return await autoUpdater.downloadUpdate()
+      try {
+        await autoUpdater.downloadUpdate()
+        // Return a simple success indicator instead of complex objects
+        return { success: true }
+      } catch (error) {
+        console.error('Error downloading update:', error)
+        return { 
+          success: false, 
+          error: error instanceof Error ? error.message : 'Unknown error' 
+        }
+      }
     }
-    return null
+    return { success: false, error: 'Development mode' }
   })
 
   ipcMain.handle('quit-and-install', () => {

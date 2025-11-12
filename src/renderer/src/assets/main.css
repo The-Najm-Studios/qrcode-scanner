@@ -301,6 +301,58 @@ details[open] summary {
   margin-bottom: 4px;
 }
 
+/* Spinner for installing state */
+.spinner {
+  border: 2px solid #ecf0f1;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  margin: 4px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.update-notification.installing {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  text-align: center;
+}
+
+.update-notification.installing h3 {
+  color: #856404;
+  margin: 0 0 4px 0;
+}
+
+.update-notification.installing p {
+  color: #856404;
+  margin: 2px 0;
+}
+
+.update-notification.installing small {
+  color: #6c757d;
+}
+
+.update-notification.downloading {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  text-align: center;
+}
+
+.update-notification.downloading h3 {
+  color: #1565c0;
+  margin: 0 0 4px 0;
+}
+
+.update-notification.downloading p {
+  color: #1565c0;
+  margin: 2px 0;
+}
+
 /* QR Scanner Styles - Optimized for 320x240 */
 .qr-display {
   width: 100%;

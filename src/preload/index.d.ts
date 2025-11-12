@@ -1,14 +1,46 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
 
+interface UpdateInfo {
+  version: string
+  releaseDate?: string
+  releaseName?: string
+  releaseNotes?: string
+}
+
+interface DownloadProgress {
+  bytesPerSecond: number
+  percent: number
+  transferred: number
+  total: number
+}
+
+interface UpdateCheckResult {
+  updateInfo?: {
+    version: string
+    files?: Array<{
+      url: string
+      sha512: string
+      size: number
+    }>
+    path?: string
+    sha512?: string
+    releaseDate?: string
+  }
+  versionInfo?: {
+    version: string
+  }
+  error?: string
+}
+
 interface UpdaterAPI {
-  checkForUpdates: () => Promise<any>
-  downloadUpdate: () => Promise<any>
+  checkForUpdates: () => Promise<UpdateCheckResult | null>
+  downloadUpdate: () => Promise<{ success: boolean; error?: string }>
   quitAndInstall: () => Promise<void>
-  onUpdateAvailable: (callback: (info: any) => void) => void
-  onUpdateNotAvailable: (callback: (info: any) => void) => void
-  onUpdateDownloaded: (callback: (info: any) => void) => void
-  onDownloadProgress: (callback: (progress: any) => void) => void
-  onError: (callback: (error: any) => void) => void
+  onUpdateAvailable: (callback: (info: UpdateInfo) => void) => void
+  onUpdateNotAvailable: (callback: (info: UpdateInfo) => void) => void
+  onUpdateDownloaded: (callback: (info: UpdateInfo) => void) => void
+  onDownloadProgress: (callback: (progress: DownloadProgress) => void) => void
+  onError: (callback: (error: { message: string; name: string }) => void) => void
 }
 
 interface ScannerAPI {

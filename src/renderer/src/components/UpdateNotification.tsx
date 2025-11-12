@@ -19,6 +19,7 @@ const UpdateNotification = () => {
   const [downloading, setDownloading] = useState(false)
   const [downloadProgress, setDownloadProgress] = useState<DownloadProgress | null>(null)
   const [updateReady, setUpdateReady] = useState(false)
+  const [installing, setInstalling] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -57,16 +58,22 @@ const UpdateNotification = () => {
 
   const handleDownloadUpdate = async () => {
     try {
+      setDownloading(true)
+      setError(null)
       await window.api.updater.downloadUpdate()
     } catch (err) {
+      setDownloading(false)
       setError('Failed to download update')
     }
   }
 
   const handleInstallUpdate = async () => {
     try {
+      setInstalling(true)
+      setError(null)
       await window.api.updater.quitAndInstall()
     } catch (err) {
+      setInstalling(false)
       setError('Failed to install update')
     }
   }
@@ -88,6 +95,17 @@ const UpdateNotification = () => {
     )
   }
 
+  if (installing) {
+    return (
+      <div className="update-notification installing">
+        <h3>⚙️ Installing Update...</h3>
+        <div className="spinner"></div>
+        <p>Installing update and restarting application...</p>
+        <p><small>This may take a few moments</small></p>
+      </div>
+    )
+  }
+
   if (updateReady) {
     return (
       <div className="update-notification ready">
@@ -105,6 +123,7 @@ const UpdateNotification = () => {
     return (
       <div className="update-notification downloading">
         <h3>⬇️ Downloading Update...</h3>
+        <div className="spinner"></div>
         <div className="progress-bar">
           <div className="progress-fill" style={{ width: `${downloadProgress.percent}%` }}></div>
         </div>
@@ -112,6 +131,16 @@ const UpdateNotification = () => {
           {Math.round(downloadProgress.percent)}% -{' '}
           {(downloadProgress.bytesPerSecond / 1024 / 1024).toFixed(2)} MB/s
         </p>
+      </div>
+    )
+  }
+
+  if (downloading && !downloadProgress) {
+    return (
+      <div className="update-notification downloading">
+        <h3>⬇️ Preparing Download...</h3>
+        <div className="spinner"></div>
+        <p>Initializing update download...</p>
       </div>
     )
   }
