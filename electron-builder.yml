@@ -57,8 +57,6 @@ deb:
     - libnss3
     - libxss1
     - libasound2
-  fpm:
-    - '--deb-field=Homepage: https://github.com/The-Najm-Studios/qrcode-scanner'
 npmRebuild: false
 publish:
   provider: github
