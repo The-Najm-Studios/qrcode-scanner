@@ -101,7 +101,9 @@ const UpdateNotification = () => {
         <h3>⚙️ Installing Update...</h3>
         <div className="spinner"></div>
         <p>Installing update and restarting application...</p>
-        <p><small>This may take a few moments</small></p>
+        <p>
+          <small>This may take a few moments</small>
+        </p>
       </div>
     )
   }

@@ -141,21 +141,25 @@ app.whenReady().then(() => {
         const result = await autoUpdater.checkForUpdates()
         // Extract only serializable data to avoid cloning errors
         return {
-          updateInfo: result ? {
-            version: result.updateInfo?.version,
-            files: result.updateInfo?.files?.map(file => ({
-              url: file.url,
-              sha512: file.sha512,
-              size: file.size
-            })),
-            path: result.updateInfo?.path,
-            sha512: result.updateInfo?.sha512,
-            releaseDate: result.updateInfo?.releaseDate
-          } : null,
+          updateInfo: result
+            ? {
+                version: result.updateInfo?.version,
+                files: result.updateInfo?.files?.map((file) => ({
+                  url: file.url,
+                  sha512: file.sha512,
+                  size: file.size
+                })),
+                path: result.updateInfo?.path,
+                sha512: result.updateInfo?.sha512,
+                releaseDate: result.updateInfo?.releaseDate
+              }
+            : null,
           cancellationToken: null, // Don't send the cancellation token
-          versionInfo: result ? {
-            version: result.updateInfo?.version
-          } : null
+          versionInfo: result
+            ? {
+                version: result.updateInfo?.version
+              }
+            : null
         }
       } catch (error) {
         console.error('Error checking for updates:', error)
@@ -173,9 +177,9 @@ app.whenReady().then(() => {
         return { success: true }
       } catch (error) {
         console.error('Error downloading update:', error)
-        return { 
-          success: false, 
-          error: error instanceof Error ? error.message : 'Unknown error' 
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error'
         }
       }
     }
