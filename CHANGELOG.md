@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.11.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.10.0...v1.11.0) (2025-11-12)
+
+
+### Features
+
+* Enhance release workflow with QEMU setup and cross-compilation tools for ARM64 ([b94b2eb](https://github.com/The-Najm-Studios/qrcode-scanner/commit/b94b2eb3f660a0b23d33a5d2202f5652df00004a))
+* Update release notes and installation instructions for multiple platforms ([d30a14e](https://github.com/The-Najm-Studios/qrcode-scanner/commit/d30a14e98bfbecde8d34ecc8faa81ec6238b1531))
+
 # [1.10.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.9.0...v1.10.0) (2025-11-12)
 
 
