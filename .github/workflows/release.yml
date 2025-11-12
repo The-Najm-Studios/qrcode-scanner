@@ -52,11 +52,11 @@ jobs:
             dist/*.AppImage
           body: |
             ## QR Code Scanner for Raspberry Pi
-            
+
             ### 📦 Installation Files
             - **qrcode-scanner-*-arm64.deb**: Debian package for Raspberry Pi OS
             - **qrcode-scanner-*-arm64.AppImage**: Portable executable
-            
+
             ### 🍓 Raspberry Pi Installation
             ```bash
             # Download and install .deb package
@@ -64,7 +64,7 @@ jobs:
             sudo dpkg -i qrcode-scanner-*-arm64.deb
             sudo apt-get install -f
             ```
-            
+
             ### ✨ Auto-Updates
             This version includes automatic update checking. Your app will notify you when new versions are available.
         env:

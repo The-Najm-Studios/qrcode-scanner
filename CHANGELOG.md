@@ -8,12 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### 🚀 Features
+
 - Initial QR Code Scanner application setup
 - Auto-update functionality with electron-updater
 - Raspberry Pi ARM64 build support
 - Semantic release automation
 
-### 🛠️ Infrastructure  
+### 🛠️ Infrastructure
+
 - GitHub Actions workflow for automated releases
 - Semantic-release configuration
 - Conventional commits support
@@ -21,4 +23,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-*This changelog is automatically updated by semantic-release based on commit messages following the [Conventional Commits](https://www.conventionalcommits.org/) specification.*
+_This changelog is automatically updated by semantic-release based on commit messages following the [Conventional Commits](https://www.conventionalcommits.org/) specification._
