@@ -190,9 +190,7 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
   )
 
   return (
-    <div className="qr-display">
-      {activeTab === 'scan' ? renderScanTab() : renderHistoryTab()}
-    </div>
+    <div className="qr-display">{activeTab === 'scan' ? renderScanTab() : renderHistoryTab()}</div>
   )
 }
 
