@@ -5,7 +5,11 @@ interface QRScanData {
   timestamp: Date
 }
 
-const QRDisplay = () => {
+interface QRDisplayProps {
+  activeTab: 'scan' | 'history'
+}
+
+const QRDisplay = ({ activeTab }: QRDisplayProps) => {
   const [scanHistory, setScanHistory] = useState<QRScanData[]>([])
   const [scannerStatus, setScannerStatus] = useState<boolean>(false)
   const [isListening, setIsListening] = useState<boolean>(false)
@@ -83,8 +87,8 @@ const QRDisplay = () => {
     setScanHistory([])
   }
 
-  return (
-    <div className="qr-display">
+  const renderScanTab = () => (
+    <div className="scan-tab">
       <div className="scanner-status">
         <h2>📱 GM60 QR Scanner</h2>
         <div className={`status-indicator ${scannerStatus ? 'connected' : 'disconnected'}`}>
@@ -99,50 +103,95 @@ const QRDisplay = () => {
         </button>
       </div>
 
-      <div className="scan-history">
-        <div className="history-header">
-          <h3>📋 Scan History</h3>
-          {scanHistory.length > 0 && (
-            <button onClick={clearHistory} className="clear-btn">
-              🗑️ Clear
-            </button>
-          )}
-        </div>
-
-        {scanHistory.length === 0 ? (
-          <div className="no-scans">
-            <p>🔍 No QR codes scanned yet</p>
-            <p>Point the GM60 scanner at a QR code to get started</p>
-          </div>
-        ) : (
-          <div className="scan-list">
-            {scanHistory.map((scan, index) => (
-              <div key={index} className="scan-item">
-                <div className="scan-content">
-                  <div className="scan-data">
-                    {isValidUrl(scan.data) ? (
-                      <a
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          openLink(scan.data)
-                        }}
-                        className="scan-link"
-                        title="Click to open in browser"
-                      >
-                        🔗 {scan.data}
-                      </a>
-                    ) : (
-                      <span className="scan-text">📝 {scan.data}</span>
-                    )}
-                  </div>
-                  <div className="scan-timestamp">⏰ {formatTimestamp(scan.timestamp)}</div>
-                </div>
+      {scanHistory.length > 0 && (
+        <div className="latest-scan">
+          <h3>🔍 Latest Scan</h3>
+          <div className="scan-item latest">
+            <div className="scan-content">
+              <div className="scan-data">
+                {isValidUrl(scanHistory[0].data) ? (
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      openLink(scanHistory[0].data)
+                    }}
+                    className="scan-link"
+                    title="Click to open in browser"
+                  >
+                    🔗 {scanHistory[0].data}
+                  </a>
+                ) : (
+                  <span className="scan-text">📝 {scanHistory[0].data}</span>
+                )}
               </div>
-            ))}
+              <div className="scan-timestamp">⏰ {formatTimestamp(scanHistory[0].timestamp)}</div>
+            </div>
           </div>
+        </div>
+      )}
+
+      <div className="scan-instructions">
+        <h3>📋 Instructions</h3>
+        <ul>
+          <li>🔌 Check scanner connection</li>
+          <li>📷 Point at QR code</li>
+          <li>✨ Data appears automatically</li>
+        </ul>
+      </div>
+    </div>
+  )
+
+  const renderHistoryTab = () => (
+    <div className="history-tab">
+      <div className="history-header">
+        <h3>📋 Scan History</h3>
+        {scanHistory.length > 0 && (
+          <button onClick={clearHistory} className="clear-btn">
+            🗑️ Clear All
+          </button>
         )}
       </div>
+
+      {scanHistory.length === 0 ? (
+        <div className="no-scans">
+          <p>🔍 No QR codes scanned yet</p>
+          <p>Switch to the "Scan QR Code" tab and scan something!</p>
+        </div>
+      ) : (
+        <div className="scan-list">
+          {scanHistory.map((scan, index) => (
+            <div key={index} className="scan-item">
+              <div className="scan-content">
+                <div className="scan-data">
+                  {isValidUrl(scan.data) ? (
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        openLink(scan.data)
+                      }}
+                      className="scan-link"
+                      title="Click to open in browser"
+                    >
+                      🔗 {scan.data}
+                    </a>
+                  ) : (
+                    <span className="scan-text">📝 {scan.data}</span>
+                  )}
+                </div>
+                <div className="scan-timestamp">⏰ {formatTimestamp(scan.timestamp)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+
+  return (
+    <div className="qr-display">
+      {activeTab === 'scan' ? renderScanTab() : renderHistoryTab()}
     </div>
   )
 }
