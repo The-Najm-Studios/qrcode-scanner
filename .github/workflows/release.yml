@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build for Raspberry Pi (ARM64)
-        run: npm run build:rpi
+      - name: Build and Publish for Raspberry Pi (ARM64)
+        run: npm run build:publish:rpi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -45,14 +45,10 @@ jobs:
             echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Upload Release Assets
+      - name: Update Release Description
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.get_tag.outputs.tag_name }}
-          name: ${{ steps.get_tag.outputs.tag_name }}
-          files: |
-            dist/*.deb
-            dist/*.AppImage
           body: |
             ## QR Code Scanner for Raspberry Pi
 
@@ -70,5 +66,13 @@ jobs:
 
             ### ✨ Auto-Updates
             This version includes automatic update checking. Your app will notify you when new versions are available.
+
+            ### 📱 AppImage Alternative
+            ```bash
+            # Download AppImage
+            wget https://github.com/The-Najm-Studios/qrcode-scanner/releases/download/${{ steps.get_tag.outputs.tag_name }}/qrcode-scanner-*-arm64.AppImage
+            chmod +x qrcode-scanner-*-arm64.AppImage
+            ./qrcode-scanner-*-arm64.AppImage
+            ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
