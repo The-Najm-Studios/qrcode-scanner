@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.1...v1.4.2) (2025-11-12)
+
+
+### Bug Fixes
+
+* update version to 1.4.1 and add @semantic-release/npm dependency ([4062464](https://github.com/The-Najm-Studios/qrcode-scanner/commit/406246411e923f336745a1ec7bfb5fe1df338c98))
+
 ## [1.4.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.4.0...v1.4.1) (2025-11-12)
 
 
