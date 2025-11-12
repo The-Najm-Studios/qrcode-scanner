@@ -20,7 +20,7 @@ export class GM60Scanner {
         '/dev/serial1' // Secondary UART symlink
       ]
 
-      let portPath = null
+      let portPath: string | null = null
 
       // Try to find available port
       const { SerialPort } = await import('serialport')
@@ -72,7 +72,8 @@ export class GM60Scanner {
         }
       })
     } catch (error) {
-      console.error('Failed to initialize GM60 scanner:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      console.error('Failed to initialize GM60 scanner:', errorMessage)
     }
   }
 

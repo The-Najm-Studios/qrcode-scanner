@@ -135,7 +135,8 @@ app.whenReady().then(() => {
         await qrScanner.sendCommand(command)
         return { success: true }
       } catch (error) {
-        return { success: false, error: error.message }
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        return { success: false, error: errorMessage }
       }
     }
     return { success: false, error: 'Scanner not initialized' }
