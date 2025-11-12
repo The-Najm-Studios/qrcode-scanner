@@ -53,10 +53,15 @@ deb:
   description: A modern QR code scanner application with auto-update support, optimized for Raspberry Pi.
   depends:
     - libgtk-3-0
-    - libgconf-2-4
+    - libgconf-2-4 | libgconf2-4
     - libnss3
     - libxss1
     - libasound2
+    - libdrm2
+    - libxcomposite1
+    - libxdamage1
+    - libxrandr2
+    - libgbm1
 npmRebuild: false
 publish:
   provider: github
