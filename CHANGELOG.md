@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.11.0...v1.11.1) (2025-11-12)
+
+
+### Bug Fixes
+
+* update environment variables for ARM64 cross-compilation in release workflow ([31fc0b8](https://github.com/The-Najm-Studios/qrcode-scanner/commit/31fc0b8055c1330998992ca6489f35c63d1a7032))
+
 # [1.11.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.10.0...v1.11.0) (2025-11-12)
 
 
