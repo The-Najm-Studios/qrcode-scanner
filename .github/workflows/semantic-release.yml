@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     outputs:
-       tag-created: ${{ steps.check_tag.outputs.new_tag_created }}
+      tag-created: ${{ steps.check_tag.outputs.new_tag_created }}
       tag-name: ${{ steps.check_tag.outputs.tag_name }}
 
     steps:
