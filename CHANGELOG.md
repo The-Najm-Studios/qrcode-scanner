@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.7.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.6.0...v1.7.0) (2025-11-12)
+
+
+### Features
+
+* add fullscreen toggle functionality with IPC handlers and UI component ([5bb2d06](https://github.com/The-Najm-Studios/qrcode-scanner/commit/5bb2d06d43416463383b5a2d1b0295bd77e890a1))
+
 # [1.6.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.5.0...v1.6.0) (2025-11-12)
 
 
