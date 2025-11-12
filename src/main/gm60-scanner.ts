@@ -12,7 +12,7 @@ export class GM60Scanner {
 
   private async initializeScanner() {
     try {
-      // Common UART paths on Raspberry Pi (for hardwired GM60)
+      // For hardwired GM60, prioritize known UART paths
       const possiblePaths = [
         '/dev/serial0', // Primary UART symlink (recommended for hardwired)
         '/dev/ttyAMA0', // Primary UART on Pi 4/5
@@ -22,26 +22,40 @@ export class GM60Scanner {
 
       let portPath: string | null = null
 
-      // Try to find available port
-      const { SerialPort } = await import('serialport')
-      const ports = await SerialPort.list()
+      // Try to find available port - but don't rely solely on SerialPort.list()
+      try {
+        const { SerialPort } = await import('serialport')
+        const ports = await SerialPort.list()
 
-      for (const path of possiblePaths) {
-        const exists = ports.some((port) => port.path === path)
-        if (exists) {
-          portPath = path
-          break
+        for (const path of possiblePaths) {
+          const exists = ports.some((port) => port.path === path)
+          if (exists) {
+            portPath = path
+            break
+          }
         }
+      } catch (listError) {
+        console.warn('Could not list serial ports:', listError)
       }
 
       if (!portPath) {
-        // Fallback to first available port or default
+        // For hardwired connections, try the most likely path
         portPath = possiblePaths[0]
-        console.warn(`No standard UART found, using default: ${portPath}`)
+        console.log(`Using default UART path for hardwired GM60: ${portPath}`)
       }
 
       console.log(`Attempting to connect to GM60 scanner on ${portPath}`)
 
+      await this.connectToPort(portPath)
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      console.error('Failed to initialize GM60 scanner:', errorMessage)
+      // Don't throw here - allow the app to continue and show disconnected state
+    }
+  }
+
+  private async connectToPort(portPath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
       this.port = new SerialPort({
         path: portPath,
         baudRate: 9600, // Standard GM60 baud rate
@@ -58,10 +72,26 @@ export class GM60Scanner {
 
       this.port.on('open', () => {
         console.log('GM60 Scanner connected successfully')
+        resolve()
       })
 
       this.port.on('error', (err) => {
         console.error('Serial port error:', err.message)
+        
+        if (err.message.includes('No such file or directory')) {
+          console.warn('UART device not found. For hardwired GM60:')
+          console.warn('1. Enable UART: sudo raspi-config -> Interface Options -> Serial')
+          console.warn('2. Disable console: Login shell over serial = NO')
+          console.warn('3. Enable hardware: Serial port hardware = YES')
+          console.warn('4. Add to /boot/config.txt: enable_uart=1')
+          console.warn('5. Reboot the system')
+        } else if (err.message.includes('Permission denied')) {
+          console.warn('Permission denied. Add user to dialout group:')
+          console.warn('sudo usermod -a -G dialout $USER')
+          console.warn('Then logout and login again')
+        }
+        
+        // Don't reject immediately - the port might still work for scanning
       })
 
       this.parser.on('data', (data) => {
@@ -71,10 +101,14 @@ export class GM60Scanner {
           this.onDataCallback(scannedData)
         }
       })
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-      console.error('Failed to initialize GM60 scanner:', errorMessage)
-    }
+
+      // Set a timeout for connection
+      setTimeout(() => {
+        if (!this.port?.isOpen) {
+          reject(new Error(`Failed to connect to ${portPath} within timeout`))
+        }
+      }, 2000)
+    })
   }
 
   public onScan(callback: (data: string) => void) {
@@ -98,6 +132,24 @@ export class GM60Scanner {
 
   public isConnected(): boolean {
     return this.port ? this.port.isOpen : false
+  }
+
+  // Retry connection to scanner
+  public async reconnect(): Promise<boolean> {
+    try {
+      if (this.port && this.port.isOpen) {
+        await this.disconnect()
+      }
+      
+      await this.initializeScanner()
+      
+      // Wait a bit and check if connection succeeded
+      await new Promise(resolve => setTimeout(resolve, 500))
+      return this.isConnected()
+    } catch (error) {
+      console.error('Failed to reconnect to GM60 scanner:', error)
+      return false
+    }
   }
 
   // Send configuration commands to GM60 if needed

@@ -129,6 +129,19 @@ app.whenReady().then(() => {
     return qrScanner ? qrScanner.isConnected() : false
   })
 
+  ipcMain.handle('scanner-reconnect', async () => {
+    if (qrScanner) {
+      try {
+        const success = await qrScanner.reconnect()
+        return { success, connected: qrScanner.isConnected() }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        return { success: false, connected: false, error: errorMessage }
+      }
+    }
+    return { success: false, connected: false, error: 'Scanner not initialized' }
+  })
+
   ipcMain.handle('scanner-send-command', async (_, command: string) => {
     if (qrScanner) {
       try {

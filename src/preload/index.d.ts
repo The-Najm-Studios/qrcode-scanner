@@ -13,6 +13,7 @@ interface UpdaterAPI {
 
 interface ScannerAPI {
   getStatus: () => Promise<boolean>
+  reconnect: () => Promise<{ success: boolean; connected: boolean; error?: string }>
   sendCommand: (command: string) => Promise<{ success: boolean; error?: string }>
   onQRScanned: (callback: (data: string) => void) => void
   removeQRListener: () => void

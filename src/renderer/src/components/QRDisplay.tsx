@@ -52,6 +52,25 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
     }
   }
 
+  const reconnectScanner = async () => {
+    if (window.api?.scanner) {
+      try {
+        console.log('Attempting to reconnect to GM60 scanner...')
+        const result = await window.api.scanner.reconnect()
+        setScannerStatus(result.connected)
+        
+        if (result.success) {
+          console.log('Scanner reconnection successful')
+        } else {
+          console.warn('Scanner reconnection failed:', result.error)
+        }
+      } catch (error) {
+        console.error('Failed to reconnect scanner:', error)
+        setScannerStatus(false)
+      }
+    }
+  }
+
   const openLink = (url: string) => {
     // Check if it's a valid URL
     try {
@@ -98,8 +117,8 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
         <div className={`listener-status ${isListening ? 'listening' : 'not-listening'}`}>
           {isListening ? '🎧 Listening for scans...' : '❌ Not listening'}
         </div>
-        <button onClick={checkScannerStatus} className="refresh-btn">
-          🔄 Refresh Status
+        <button onClick={reconnectScanner} className="refresh-btn">
+          🔄 {scannerStatus ? 'Refresh' : 'Reconnect'}
         </button>
       </div>
 
@@ -134,9 +153,10 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
       <div className="scan-instructions">
         <h3>📋 Instructions</h3>
         <ul>
-          <li>🔌 Check scanner connection</li>
-          <li>📷 Point at QR code</li>
+          <li>🔌 GM60 is hardwired to UART</li>
+          <li>📷 Point at QR code to scan</li>
           <li>✨ Data appears automatically</li>
+          {!scannerStatus && <li>⚠️ Try "Reconnect" if disconnected</li>}
         </ul>
       </div>
     </div>

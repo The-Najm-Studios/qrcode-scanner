@@ -27,6 +27,7 @@ const api = {
   // QR Scanner API
   scanner: {
     getStatus: () => ipcRenderer.invoke('scanner-status'),
+    reconnect: () => ipcRenderer.invoke('scanner-reconnect'),
     sendCommand: (command: string) => ipcRenderer.invoke('scanner-send-command', command),
     onQRScanned: (callback: (data: string) => void) => {
       ipcRenderer.on('qr-scanned', (_event, data) => callback(data))
