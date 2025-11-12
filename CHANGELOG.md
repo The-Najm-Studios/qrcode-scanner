@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.8.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.7.0...v1.8.0) (2025-11-12)
+
+
+### Features
+
+* update electron-builder configuration for npm rebuild and asar unpacking ([f762b54](https://github.com/The-Najm-Studios/qrcode-scanner/commit/f762b54a2880ed7de37682b3c235fa29f09abab5))
+
 # [1.7.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.6.0...v1.7.0) (2025-11-12)
 
 
