@@ -122,17 +122,39 @@ export class GM60Scanner {
       this.parser = this.port.pipe(new ReadlineParser({ delimiter: '\r\n' }))
       console.log('[GM60Scanner] ReadlineParser attached with delimiter: \\r\\n')
 
+      // Buffer to collect chunked data from GM60
+      let dataBuffer = ''
+      let lastDataTime = 0
+
       this.port.on('open', () => {
         console.log('[GM60Scanner] ✅ Serial port opened successfully')
         console.log('[GM60Scanner] GM60 Scanner connected successfully')
 
-        // Monitor raw data from GM60 to debug data format
+        // Handle chunked data from GM60
         this.port!.on('data', (rawData) => {
           console.log('[GM60Scanner] 🔍 RAW DATA from GM60:')
           console.log('  📊 Hex:', rawData.toString('hex'))
           console.log('  📝 ASCII:', JSON.stringify(rawData.toString('ascii')))
           console.log('  📏 Length:', rawData.length, 'bytes')
           console.log('  🕐 Timestamp:', new Date().toISOString())
+          
+          // Add chunk to buffer
+          const chunk = rawData.toString('ascii')
+          dataBuffer += chunk
+          console.log('  🧩 Buffer now contains:', JSON.stringify(dataBuffer))
+          
+          // Set timeout to process complete data when chunks stop arriving
+          const now = Date.now()
+          lastDataTime = now
+          
+          setTimeout(() => {
+            // If no new data arrived in 100ms, process the buffered data
+            if (lastDataTime === now && dataBuffer.length > 0) {
+              console.log('[GM60Scanner] 📝 Processing complete buffered data:', JSON.stringify(dataBuffer))
+              this.processQRData(dataBuffer.trim())
+              dataBuffer = '' // Clear buffer
+            }
+          }, 100)
         })
 
         resolve()
@@ -195,6 +217,27 @@ export class GM60Scanner {
         }
       }, 2000)
     })
+  }
+
+  private processQRData(data: string) {
+    console.log(`[GM60Scanner] 📡 Processing QR data from buffer:`, JSON.stringify(data))
+    console.log(`[GM60Scanner] 📡 Data length:`, data.length)
+    console.log(
+      `[GM60Scanner] 🎯 Callback status: ${this.onDataCallback ? 'registered' : 'NOT REGISTERED'}`
+    )
+
+    if (data && this.onDataCallback) {
+      console.log('[GM60Scanner] 🚀 Calling onDataCallback with scanned data:', data)
+      this.onDataCallback(data)
+      console.log('[GM60Scanner] ✅ onDataCallback execution completed')
+    } else {
+      if (!data) {
+        console.warn('[GM60Scanner] ⚠️ No data to process - ignoring empty data')
+      }
+      if (!this.onDataCallback) {
+        console.warn('[GM60Scanner] ⚠️ No callback registered - data will be lost!')
+      }
+    }
   }
 
   public onScan(callback: (data: string) => void) {
