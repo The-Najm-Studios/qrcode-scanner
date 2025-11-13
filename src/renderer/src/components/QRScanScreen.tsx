@@ -57,7 +57,7 @@ export function QRScanScreen({
       })
 
       const response = await fetch(qrData.trim(), {
-        method: 'GET',
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${apiKey.value}`,
           'Content-Type': 'application/json'
@@ -88,24 +88,23 @@ export function QRScanScreen({
       const data = await response.json()
       console.log('Received response data:', JSON.stringify(data, null, 2))
 
-      // Extract firstName and lastName from the participant object
-      if (!data.participant || !data.participant.firstName || !data.participant.lastName) {
+      // Extract firstName and lastName from the root object
+      if (!data.firstName || !data.lastName) {
         console.error('❌ FAILURE POINT 4: Invalid response structure:', {
-          hasParticipant: !!data.participant,
-          hasFirstName: !!data.participant?.firstName,
-          hasLastName: !!data.participant?.lastName,
+          hasFirstName: !!data.firstName,
+          hasLastName: !!data.lastName,
           actualData: data
         })
         throw new Error(
-          '❌ FAILURE POINT 4: Response missing required fields: participant.firstName and participant.lastName'
+          '❌ FAILURE POINT 4: Response missing required fields: firstName and lastName'
         )
       }
 
       console.log('Successfully extracted participant data:', {
-        firstName: data.participant.firstName,
-        lastName: data.participant.lastName
+        firstName: data.firstName,
+        lastName: data.lastName
       })
-      onRegistrationSuccess(data.participant.firstName, data.participant.lastName)
+      onRegistrationSuccess(data.firstName, data.lastName)
     } catch (error) {
       console.error('=== REGISTRATION ERROR DETAILS ===')
       console.error('Error type:', error instanceof Error ? error.constructor.name : typeof error)
