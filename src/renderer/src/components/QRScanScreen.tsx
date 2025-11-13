@@ -63,12 +63,14 @@ export function QRScanScreen({
         console.error('HTTP request failed with status:', response.status)
         console.error('Response status text:', response.statusText)
         console.error('Response URL:', response.url)
-        
+
         // Try to get response body for more details
         try {
           const errorText = await response.text()
           console.error('Response body:', errorText)
-          throw new Error(`HTTP ${response.status}: ${response.statusText}${errorText ? ' - ' + errorText : ''}`)
+          throw new Error(
+            `HTTP ${response.status}: ${response.statusText}${errorText ? ' - ' + errorText : ''}`
+          )
         } catch (textError) {
           console.error('Could not read response body:', textError)
           throw new Error(`HTTP ${response.status}: ${response.statusText}`)
@@ -82,8 +84,8 @@ export function QRScanScreen({
       if (!data.participant || !data.participant.firstName || !data.participant.lastName) {
         console.error('Invalid response structure:', {
           hasParticipant: !!data.participant,
-          hasFirstName: !!(data.participant?.firstName),
-          hasLastName: !!(data.participant?.lastName),
+          hasFirstName: !!data.participant?.firstName,
+          hasLastName: !!data.participant?.lastName,
           actualData: data
         })
         throw new Error(
@@ -103,7 +105,7 @@ export function QRScanScreen({
       console.error('QR Code data that caused error:', qrData)
       console.error('API Key used:', apiKey.name)
       console.error('Full error object:', error)
-      
+
       if (error instanceof TypeError && error.message.includes('fetch')) {
         console.error('Network error - possible causes:')
         console.error('- No internet connection')
@@ -111,13 +113,13 @@ export function QRScanScreen({
         console.error('- CORS issues')
         console.error('- Server unreachable')
       }
-      
+
       if (error instanceof Error && error.message.includes('JSON')) {
         console.error('JSON parsing error - response may not be valid JSON')
       }
-      
+
       console.error('=== END ERROR DETAILS ===')
-      
+
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
       onRegistrationError(errorMessage)
     }
