@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.22.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.21.0...v1.22.0) (2025-11-13)
+
+
+### Features
+
+* enhance logging and error handling for QR scan event ([62a6cec](https://github.com/The-Najm-Studios/qrcode-scanner/commit/62a6cec1072a988e4f4e31341e31c741a77b637f))
+
 # [1.21.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.20.0...v1.21.0) (2025-11-13)
 
 
