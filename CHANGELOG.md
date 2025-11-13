@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.16.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.15.0...v1.16.0) (2025-11-13)
+
+
+### Features
+
+* enhance GM60Scanner data handling with chunked data processing and buffering ([a7cbadc](https://github.com/The-Najm-Studios/qrcode-scanner/commit/a7cbadcedc5873b264da13ae0bd3ea6e3778f297))
+
 # [1.15.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.14.0...v1.15.0) (2025-11-13)
 
 
