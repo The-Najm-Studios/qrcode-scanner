@@ -30,10 +30,13 @@ export class GM60Scanner {
         console.log('[GM60Scanner] Attempting to list available serial ports...')
         const { SerialPort } = await import('serialport')
         const ports = await SerialPort.list()
-        console.log(
-          '[GM60Scanner] Available serial ports:',
-          ports.map((p) => ({ path: p.path, manufacturer: p.manufacturer }))
-        )
+        console.log('[GM60Scanner] Available serial ports:')
+        ports.forEach((p, index) => {
+          console.log(`  [${index}] Path: ${p.path}`)
+          console.log(`      Manufacturer: ${p.manufacturer || 'undefined'}`)
+          console.log(`      Product ID: ${p.productId || 'undefined'}`)
+          console.log(`      Vendor ID: ${p.vendorId || 'undefined'}`)
+        })
 
         for (const path of possiblePaths) {
           const exists = ports.some((port) => port.path === path)
@@ -49,9 +52,37 @@ export class GM60Scanner {
       }
 
       if (!portPath) {
-        // For hardwired connections, try the most likely path
-        portPath = possiblePaths[0]
-        console.log(`[GM60Scanner] Using default UART path for hardwired GM60: ${portPath}`)
+        // Force primary UART for hardwired GM60 connections
+        const primaryPaths = ['/dev/serial0', '/dev/ttyAMA0']
+        console.log(
+          '[GM60Scanner] No ports found in SerialPort.list(), checking filesystem directly...'
+        )
+
+        for (const path of primaryPaths) {
+          try {
+            const fs = await import('fs')
+            if (fs.existsSync(path)) {
+              console.log(`[GM60Scanner] ✅ Found ${path} in filesystem`)
+              portPath = path
+              break
+            } else {
+              console.log(`[GM60Scanner] ❌ ${path} not found in filesystem`)
+            }
+          } catch (error) {
+            console.log(`[GM60Scanner] Error checking ${path}:`, error)
+          }
+        }
+
+        if (!portPath) {
+          // Fallback to mini UART (but warn about potential issues)
+          portPath = '/dev/ttyS0'
+          console.warn(
+            '[GM60Scanner] ⚠️ Using mini UART /dev/ttyS0 - this may not work reliably with GM60'
+          )
+          console.warn(
+            '[GM60Scanner] ⚠️ Consider switching to primary UART with: sudo raspi-config'
+          )
+        }
       }
 
       console.log(`[GM60Scanner] Attempting to connect to GM60 scanner on ${portPath}`)
@@ -94,6 +125,16 @@ export class GM60Scanner {
       this.port.on('open', () => {
         console.log('[GM60Scanner] ✅ Serial port opened successfully')
         console.log('[GM60Scanner] GM60 Scanner connected successfully')
+
+        // Monitor raw data from GM60 to debug data format
+        this.port!.on('data', (rawData) => {
+          console.log('[GM60Scanner] 🔍 RAW DATA from GM60:')
+          console.log('  📊 Hex:', rawData.toString('hex'))
+          console.log('  📝 ASCII:', JSON.stringify(rawData.toString('ascii')))
+          console.log('  📏 Length:', rawData.length, 'bytes')
+          console.log('  🕐 Timestamp:', new Date().toISOString())
+        })
+
         resolve()
       })
 
