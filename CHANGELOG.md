@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.13.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.12.0...v1.13.0) (2025-11-13)
+
+
+### Features
+
+* refactor release workflow to separate ARM64 and x64 builds ([23608f9](https://github.com/The-Najm-Studios/qrcode-scanner/commit/23608f9e30cd88cb4beb8a3469ce615129ebe339))
+
 # [1.12.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.11.1...v1.12.0) (2025-11-12)
 
 
