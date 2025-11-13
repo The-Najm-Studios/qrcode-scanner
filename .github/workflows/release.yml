@@ -17,6 +17,8 @@ permissions:
 jobs:
   build-arm64:
     runs-on: ubuntu-24.04-arm
+    env:
+      USE_SYSTEM_FPM: "true"    # tell electron-builder to use system fpm
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,8 +35,19 @@ jobs:
       - name: Install fpm for ARM64
         run: |
           sudo apt-get update
-          sudo apt install -y ruby ruby-dev build-essential rpm dpkg-dev
+          sudo apt-get install -y ruby ruby-dev build-essential rpm dpkg-dev
+
           sudo gem install --no-document fpm
+
+          # Make sure the gem bindir is on PATH for *this* shell and next commands
+          export GEM_BINDIR="$(ruby -e 'print Gem.bindir')"
+          echo "GEM_BINDIR=$GEM_BINDIR"
+          echo "export PATH=\"$GEM_BINDIR:\$PATH\"" >> $GITHUB_ENV
+
+          # Check that fpm is visible
+          PATH="$GEM_BINDIR:$PATH"
+          which fpm
+          fpm --version
 
       - name: Build ARM64 package
         run: npm run build && npx electron-builder --linux deb --arm64 --publish always
