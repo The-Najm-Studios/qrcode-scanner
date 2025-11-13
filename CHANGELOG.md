@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.17.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.16.0...v1.17.0) (2025-11-13)
+
+
+### Features
+
+* integrate database service for API key management ([5aa69d6](https://github.com/The-Najm-Studios/qrcode-scanner/commit/5aa69d6e5e4434fc9399977439e6289766aecdcf))
+
 # [1.16.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.15.0...v1.16.0) (2025-11-13)
 
 
