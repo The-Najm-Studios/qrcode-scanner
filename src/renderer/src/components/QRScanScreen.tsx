@@ -24,17 +24,25 @@ export function QRScanScreen({
   onRegistrationError
 }: QRScanScreenProps): React.JSX.Element {
   const handleQRScanned = async (qrData: string) => {
-    console.log('QR Code scanned:', qrData)
+    console.log('🚨🚨🚨 QR Code scanned in handleQRScanned:', qrData)
+    console.log('🚨🚨🚨 QR Data type:', typeof qrData, 'Length:', qrData.length)
 
     // Validate that the QR data is an HTTPS URL
     try {
+      console.log('🔍 Attempting to parse URL:', qrData.trim())
       const url = new URL(qrData.trim())
+      console.log('✅ URL parsed successfully. Protocol:', url.protocol)
+      
       if (!url.protocol.startsWith('https:')) {
-        onRegistrationError('Only HTTPS URLs are allowed')
+        console.error('❌ FAILURE POINT 1: Protocol is not HTTPS. Protocol:', url.protocol)
+        onRegistrationError('Only HTTPS URLs are allowed - Protocol: ' + url.protocol)
         return
       }
-    } catch {
-      onRegistrationError('Invalid QR code URL format')
+      console.log('✅ URL validation passed')
+    } catch (urlError) {
+      console.error('❌ FAILURE POINT 2: Invalid URL format. Error:', urlError)
+      console.error('❌ QR Data that failed to parse:', JSON.stringify(qrData))
+      onRegistrationError('Invalid QR code URL format - Data: ' + qrData)
       return
     }
 
@@ -60,7 +68,7 @@ export function QRScanScreen({
       console.log('HTTP Response headers:', Object.fromEntries(response.headers.entries()))
 
       if (!response.ok) {
-        console.error('HTTP request failed with status:', response.status)
+        console.error('❌ FAILURE POINT 3: HTTP request failed with status:', response.status)
         console.error('Response status text:', response.statusText)
         console.error('Response URL:', response.url)
 
@@ -69,11 +77,11 @@ export function QRScanScreen({
           const errorText = await response.text()
           console.error('Response body:', errorText)
           throw new Error(
-            `HTTP ${response.status}: ${response.statusText}${errorText ? ' - ' + errorText : ''}`
+            `❌ FAILURE POINT 3: HTTP ${response.status}: ${response.statusText}${errorText ? ' - ' + errorText : ''}`
           )
         } catch (textError) {
           console.error('Could not read response body:', textError)
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+          throw new Error(`❌ FAILURE POINT 3: HTTP ${response.status}: ${response.statusText}`)
         }
       }
 
@@ -82,14 +90,14 @@ export function QRScanScreen({
 
       // Extract firstName and lastName from the participant object
       if (!data.participant || !data.participant.firstName || !data.participant.lastName) {
-        console.error('Invalid response structure:', {
+        console.error('❌ FAILURE POINT 4: Invalid response structure:', {
           hasParticipant: !!data.participant,
           hasFirstName: !!data.participant?.firstName,
           hasLastName: !!data.participant?.lastName,
           actualData: data
         })
         throw new Error(
-          'Response missing required fields: participant.firstName and participant.lastName'
+          '❌ FAILURE POINT 4: Response missing required fields: participant.firstName and participant.lastName'
         )
       }
 
@@ -126,15 +134,26 @@ export function QRScanScreen({
   }
 
   useEffect(() => {
+    console.log('[QRScanScreen] useEffect triggered - setting up QR scanner listener')
+    console.log('[QRScanScreen] window.api exists:', !!window.api)
+    console.log('[QRScanScreen] window.api.scanner exists:', !!window.api?.scanner)
+    console.log('[QRScanScreen] apiKey:', apiKey.name)
+    
     // Set up QR scanner listener
     if (window.api?.scanner) {
+      console.log('[QRScanScreen] Registering onQRScanned callback...')
       window.api.scanner.onQRScanned(handleQRScanned)
+      console.log('[QRScanScreen] ✅ onQRScanned callback registered successfully')
+    } else {
+      console.error('[QRScanScreen] ❌ window.api.scanner not available!')
     }
 
     // Cleanup function to remove listener when component unmounts
     return () => {
+      console.log('[QRScanScreen] Cleanup - removing QR listener...')
       if (window.api?.scanner) {
         window.api.scanner.removeQRListener()
+        console.log('[QRScanScreen] ✅ QR listener removed')
       }
     }
   }, [apiKey])

@@ -103,6 +103,26 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    
+    // Initialize QR Scanner after window is ready
+    console.log('[Main] Window ready - Initializing GM60 QR Scanner...')
+    qrScanner = new GM60Scanner()
+    qrScanner.onScan((data) => {
+      console.log('[Main] 📡 QR data received from scanner:', data)
+      console.log('[Main] 📡 Data type:', typeof data, 'Length:', data.length)
+      console.log('[Main] 🖥️ MainWindow exists:', !!mainWindow)
+      console.log('[Main] 🖥️ MainWindow webContents exists:', !!mainWindow?.webContents)
+
+      // Send scanned data to renderer
+      if (mainWindow) {
+        console.log('[Main] 🚀 Sending qr-scanned event to renderer with data:', data)
+        mainWindow.webContents.send('qr-scanned', data)
+        console.log('[Main] ✅ qr-scanned event sent successfully')
+      } else {
+        console.error('[Main] ❌ MainWindow is null - cannot send data to renderer!')
+      }
+    })
+    console.log('[Main] ✅ QR Scanner initialization completed')
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -281,26 +301,6 @@ app.whenReady().then(() => {
 
   // Initialize database service
   dbService = DatabaseService.getInstance()
-
-  // Initialize QR Scanner
-  console.log('[Main] Initializing GM60 QR Scanner...')
-  qrScanner = new GM60Scanner()
-  qrScanner.onScan((data) => {
-    console.log('[Main] 📡 QR data received from scanner:', data)
-    console.log('[Main] 📡 Data type:', typeof data, 'Length:', data.length)
-    console.log('[Main] 🖥️ MainWindow exists:', !!mainWindow)
-    console.log('[Main] 🖥️ MainWindow webContents exists:', !!mainWindow?.webContents)
-
-    // Send scanned data to renderer
-    if (mainWindow) {
-      console.log('[Main] 🚀 Sending qr-scanned event to renderer with data:', data)
-      mainWindow.webContents.send('qr-scanned', data)
-      console.log('[Main] ✅ qr-scanned event sent successfully')
-    } else {
-      console.error('[Main] ❌ MainWindow is null - cannot send data to renderer!')
-    }
-  })
-  console.log('[Main] ✅ QR Scanner initialization completed')
 
   createWindow()
 
