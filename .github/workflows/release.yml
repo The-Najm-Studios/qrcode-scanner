@@ -15,9 +15,8 @@ permissions:
   contents: write
 
 jobs:
-  build-and-release:
-    runs-on: ubuntu-latest
-
+  build-arm64:
+    runs-on: ubuntu-24.04-arm64
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,25 +27,56 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build ARM64 package
+        run: npm run build && npx electron-builder --linux --arm64 --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload ARM64 artifact
+        uses: actions/upload-artifact@v4
         with:
-          platforms: arm64
+          name: linux-arm64
+          path: dist/*.deb
+
+  build-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install cross-compilation tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
-
-      - name: Build and Publish for Raspberry Pi (ARM64)
-        run: npm run build:publish:rpi
+      - name: Build x64 package
+        run: npm run build && npx electron-builder --linux --x64 --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          npm_config_arch: arm64
-          npm_config_target_arch: arm64
+
+      - name: Upload x64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-x64
+          path: dist/*.deb
+
+  update-release:
+    needs: [build-arm64, build-x64]
+    runs-on: ubuntu-latest
+    steps:
+  update-release:
+    needs: [build-arm64, build-x64]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Get tag name
         id: get_tag
