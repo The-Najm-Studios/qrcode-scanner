@@ -195,9 +195,15 @@ export class GM60Scanner {
         )
 
         if (scannedData && this.onDataCallback) {
-          console.log('[GM60Scanner] � Parser path - Calling onDataCallback with scanned data:', scannedData)
-          console.log('[GM60Scanner] 🔍 Parser callback function:', this.onDataCallback.toString().substring(0, 100) + '...')
-          
+          console.log(
+            '[GM60Scanner] � Parser path - Calling onDataCallback with scanned data:',
+            scannedData
+          )
+          console.log(
+            '[GM60Scanner] 🔍 Parser callback function:',
+            this.onDataCallback.toString().substring(0, 100) + '...'
+          )
+
           try {
             this.onDataCallback(scannedData)
             console.log('[GM60Scanner] ✅ Parser - onDataCallback execution completed')
@@ -237,8 +243,11 @@ export class GM60Scanner {
 
     if (data && this.onDataCallback) {
       console.log('[GM60Scanner] 🚀 Calling onDataCallback with scanned data:', data)
-      console.log('[GM60Scanner] 🔍 Callback function:', this.onDataCallback.toString().substring(0, 100) + '...')
-      
+      console.log(
+        '[GM60Scanner] 🔍 Callback function:',
+        this.onDataCallback.toString().substring(0, 100) + '...'
+      )
+
       try {
         this.onDataCallback(data)
         console.log('[GM60Scanner] ✅ onDataCallback execution completed')
@@ -259,9 +268,9 @@ export class GM60Scanner {
     console.log('[GM60Scanner] 🎯 Registering onScan callback')
     console.log('[GM60Scanner] 🎯 Callback type:', typeof callback)
     console.log('[GM60Scanner] 🎯 Previous callback existed:', !!this.onDataCallback)
-    
+
     this.onDataCallback = callback
-    
+
     console.log('[GM60Scanner] ✅ onScan callback registered successfully')
     console.log('[GM60Scanner] 🔍 Callback after assignment:', !!this.onDataCallback)
     console.log('[GM60Scanner] 🔍 Are they the same?', this.onDataCallback === callback)

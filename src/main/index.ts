@@ -107,7 +107,7 @@ function createWindow(): void {
     // Initialize QR Scanner after window is ready
     console.log('[Main] Window ready - Initializing GM60 QR Scanner...')
     qrScanner = new GM60Scanner()
-    
+
     console.log('[Main] 🎯 About to register onScan callback...')
     qrScanner.onScan((data) => {
       console.log('[Main] 🚨🚨🚨 MAIN PROCESS CALLBACK TRIGGERED!')
