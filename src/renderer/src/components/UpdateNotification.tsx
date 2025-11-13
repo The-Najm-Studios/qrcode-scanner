@@ -24,14 +24,14 @@ const UpdateNotification = () => {
   const [updateReady, setUpdateReady] = useState(false)
   const [installing, setInstalling] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [isMaximized, setIsMaximized] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     if (!window.api?.updater) return
 
-    // Check initial maximize state
+    // Check initial fullscreen state
     if (window.api?.window) {
-      window.api.window.isMaximized().then(setIsMaximized)
+      window.api.window.isFullscreen().then(setIsFullscreen)
     }
 
     window.api.updater.onUpdateAvailable((info: UpdateInfo) => {
@@ -94,12 +94,12 @@ const UpdateNotification = () => {
     }
   }
 
-  const handleToggleMaximize = async () => {
+  const handleToggleFullscreen = async () => {
     try {
-      const maximized = await window.api.window.toggleMaximize()
-      setIsMaximized(maximized)
+      const fullscreen = await window.api.window.toggleFullscreen()
+      setIsFullscreen(fullscreen)
     } catch (err) {
-      console.error('Failed to toggle maximize:', err)
+      console.error('Failed to toggle fullscreen:', err)
     }
   }
 
@@ -225,13 +225,13 @@ const UpdateNotification = () => {
         Check for Updates
       </Button>
       <Button
-        onClick={handleToggleMaximize}
+        onClick={handleToggleFullscreen}
         variant="outline"
         size="sm"
         className="h-5 px-2 text-[7px]"
-        title={isMaximized ? 'Restore' : 'Maximize'}
+        title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
       >
-        {isMaximized ? '🗗' : '🗖'}
+        {isFullscreen ? '�' : '⛶'}
       </Button>
     </div>
   )
