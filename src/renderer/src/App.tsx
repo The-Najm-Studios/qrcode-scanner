@@ -39,6 +39,7 @@ function App(): React.JSX.Element {
 
   const handleRegistrationError = (error: string) => {
     setRegistrationResult({ error })
+    console.log(error)
     setCurrentState('error')
   }
 
