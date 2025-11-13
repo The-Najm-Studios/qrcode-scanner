@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.5](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.4...v1.13.5) (2025-11-13)
+
+
+### Bug Fixes
+
+* update ARM64 fpm installation steps and ensure gem bindir is in PATH ([1423e2e](https://github.com/The-Najm-Studios/qrcode-scanner/commit/1423e2e4ca5a15d4d2c835585f094dcccf33509e))
+
 ## [1.13.4](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.3...v1.13.4) (2025-11-13)
 
 
