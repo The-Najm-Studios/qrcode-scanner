@@ -17,7 +17,7 @@ export class DatabaseService {
     // Store database in userData directory
     const userDataPath = app.getPath('userData')
     const dbPath = join(userDataPath, 'api-keys.db')
-    
+
     this.db = new Database(dbPath)
     this.initializeDatabase()
   }
@@ -39,7 +39,7 @@ export class DatabaseService {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `
-    
+
     this.db.exec(createTableQuery)
   }
 
@@ -51,7 +51,7 @@ export class DatabaseService {
   public createApiKey(name: string, value: string): ApiKey {
     const query = 'INSERT INTO api_keys (name, value) VALUES (?, ?)'
     const result = this.db.prepare(query).run(name, value)
-    
+
     // Get the newly created record
     const getQuery = 'SELECT * FROM api_keys WHERE id = ?'
     return this.db.prepare(getQuery).get(result.lastInsertRowid) as ApiKey

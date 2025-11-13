@@ -39,7 +39,7 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
   }, [])
 
   const handleApiKeyCreated = (newApiKey: ApiKey) => {
-    setApiKeys(prev => [newApiKey, ...prev])
+    setApiKeys((prev) => [newApiKey, ...prev])
   }
 
   const formatDate = (dateString: string) => {
@@ -75,7 +75,7 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
                 {error}
               </div>
             )}
-            
+
             {apiKeys.length === 0 ? (
               <div className="text-center py-4 space-y-3">
                 <div className="text-muted-foreground text-xs">
@@ -88,7 +88,7 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
                 <ScrollArea className="h-40 pr-2">
                   <div className="space-y-2">
                     {apiKeys.map((apiKey) => (
-                      <Card 
+                      <Card
                         key={apiKey.id}
                         className="transition-colors hover:bg-muted/50 cursor-pointer border-0 shadow-none bg-muted/20"
                         onClick={() => onApiKeySelected(apiKey)}
@@ -110,7 +110,7 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
                     ))}
                   </div>
                 </ScrollArea>
-                
+
                 <div className="pt-2 border-t">
                   <CreateApiKeyDialog onApiKeyCreated={handleApiKeyCreated} />
                 </div>

@@ -23,10 +23,9 @@ export function QRScanScreen({
   onRegistrationSuccess,
   onRegistrationError
 }: QRScanScreenProps): React.JSX.Element {
-
   const handleQRScanned = async (qrData: string) => {
     console.log('QR Code scanned:', qrData)
-    
+
     // Validate that the QR data is an HTTPS URL
     try {
       const url = new URL(qrData.trim())
@@ -45,7 +44,7 @@ export function QRScanScreen({
       const response = await fetch(qrData.trim(), {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${apiKey.value}`,
+          Authorization: `Bearer ${apiKey.value}`,
           'Content-Type': 'application/json'
         }
       })
@@ -58,7 +57,9 @@ export function QRScanScreen({
 
       // Extract firstName and lastName from the participant object
       if (!data.participant || !data.participant.firstName || !data.participant.lastName) {
-        throw new Error('Response missing required fields: participant.firstName and participant.lastName')
+        throw new Error(
+          'Response missing required fields: participant.firstName and participant.lastName'
+        )
       }
 
       onRegistrationSuccess(data.participant.firstName, data.participant.lastName)
@@ -125,13 +126,13 @@ export function QRScanScreen({
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 px-4 pb-4">
-              <Button 
+              <Button
                 onClick={() => onRegistrationSuccess('John', 'Doe')}
                 className="w-full h-8 text-sm bg-green-600 hover:bg-green-700"
               >
                 Test Success Scan
               </Button>
-              <Button 
+              <Button
                 onClick={() => onRegistrationError('Test error: Network connection failed')}
                 variant="destructive"
                 className="w-full h-8 text-sm"

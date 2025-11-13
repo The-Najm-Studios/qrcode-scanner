@@ -8,10 +8,7 @@ interface SuccessScreenProps {
   lastName: string
 }
 
-export function SuccessScreen({
-  firstName,
-  lastName
-}: SuccessScreenProps): React.JSX.Element {
+export function SuccessScreen({ firstName, lastName }: SuccessScreenProps): React.JSX.Element {
   const [countdown, setCountdown] = useState(2)
 
   useEffect(() => {
@@ -19,10 +16,10 @@ export function SuccessScreen({
       const timer = setTimeout(() => {
         setCountdown(countdown - 1)
       }, 1000)
-      
+
       return () => clearTimeout(timer)
     }
-    
+
     return () => {} // Return empty cleanup function when countdown is 0
   }, [countdown])
 
@@ -38,30 +35,33 @@ export function SuccessScreen({
           </CardHeader>
           <CardContent className="space-y-3 px-4 pb-4">
             <div className="space-y-1">
-                <p className="text-sm">
-                  <strong>{firstName} {lastName}</strong> has been registered.
-                </p>
-                <p className="text-muted-foreground text-xs">
-                  Welcome, {firstName} {lastName}!
-                </p>
+              <p className="text-sm">
+                <strong>
+                  {firstName} {lastName}
+                </strong>{' '}
+                has been registered.
+              </p>
+              <p className="text-muted-foreground text-xs">
+                Welcome, {firstName} {lastName}!
+              </p>
+            </div>
+
+            {/* Countdown Timer */}
+            <div className="flex items-center justify-center space-x-2 pt-2">
+              <div className="w-6 h-6 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                <span className="text-xs font-bold text-blue-600">{countdown}</span>
               </div>
-              
-              {/* Countdown Timer */}
-              <div className="flex items-center justify-center space-x-2 pt-2">
-                <div className="w-6 h-6 rounded-full border-2 border-blue-500 flex items-center justify-center">
-                  <span className="text-xs font-bold text-blue-600">{countdown}</span>
-                </div>
-                <span className="text-xs text-muted-foreground">
-                  {countdown > 0 ? 'Returning to scanner...' : 'Redirecting...'}
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        <VersionDisplay />
-      </>
-    )
-  }
+              <span className="text-xs text-muted-foreground">
+                {countdown > 0 ? 'Returning to scanner...' : 'Redirecting...'}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      <VersionDisplay />
+    </>
+  )
+}
 
 export function ErrorScreen(): React.JSX.Element {
   const [countdown, setCountdown] = useState(2)
@@ -71,10 +71,10 @@ export function ErrorScreen(): React.JSX.Element {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1)
       }, 1000)
-      
+
       return () => clearTimeout(timer)
     }
-    
+
     return () => {} // Return empty cleanup function when countdown is 0
   }, [countdown])
 
@@ -94,7 +94,7 @@ export function ErrorScreen(): React.JSX.Element {
                 Something went wrong while registering. Please try again.
               </p>
             </div>
-            
+
             {/* Countdown Timer */}
             <div className="flex items-center justify-center space-x-2 pt-2">
               <div className="w-6 h-6 rounded-full border-2 border-red-500 flex items-center justify-center">

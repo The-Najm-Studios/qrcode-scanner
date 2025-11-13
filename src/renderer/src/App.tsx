@@ -5,12 +5,7 @@ import { SuccessScreen, ErrorScreen } from './components/ResultScreens'
 import { LoadingScreen } from './components/LoadingScreen'
 import UpdateNotification from './components/UpdateNotification'
 
-type AppState = 
-  | 'api-selection'
-  | 'qr-scan'
-  | 'loading'
-  | 'success'
-  | 'error'
+type AppState = 'api-selection' | 'qr-scan' | 'loading' | 'success' | 'error'
 
 interface ApiKey {
   id: number
@@ -57,14 +52,14 @@ function App(): React.JSX.Element {
 
       return () => clearTimeout(timer)
     }
-    
+
     return () => {} // Return empty cleanup function for other states
   }, [currentState])
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-background p-2 overflow-hidden">
       <UpdateNotification />
-      
+
       {currentState === 'api-selection' && (
         <ApiKeySelection onApiKeySelected={handleApiKeySelected} />
       )}
@@ -78,20 +73,18 @@ function App(): React.JSX.Element {
         />
       )}
 
-      {currentState === 'loading' && (
-        <LoadingScreen />
-      )}
+      {currentState === 'loading' && <LoadingScreen />}
 
-      {currentState === 'success' && registrationResult.firstName && registrationResult.lastName && (
-        <SuccessScreen
-          firstName={registrationResult.firstName}
-          lastName={registrationResult.lastName}
-        />
-      )}
+      {currentState === 'success' &&
+        registrationResult.firstName &&
+        registrationResult.lastName && (
+          <SuccessScreen
+            firstName={registrationResult.firstName}
+            lastName={registrationResult.lastName}
+          />
+        )}
 
-      {currentState === 'error' && (
-        <ErrorScreen />
-      )}
+      {currentState === 'error' && <ErrorScreen />}
     </div>
   )
 }
