@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.20.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.19.0...v1.20.0) (2025-11-13)
+
+
+### Features
+
+* enhance logging for onDataCallback execution and add error handling ([784ebc5](https://github.com/The-Najm-Studios/qrcode-scanner/commit/784ebc5d09644169ee931529746260c46b9495fc))
+
 # [1.19.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.18.0...v1.19.0) (2025-11-13)
 
 
