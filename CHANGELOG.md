@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.24.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.24.0...v1.24.1) (2025-11-13)
+
+
+### Bug Fixes
+
+* rename maximize functionality to fullscreen and update related states ([824fd7d](https://github.com/The-Najm-Studios/qrcode-scanner/commit/824fd7dd639e546542349b4748424aeaf2b027f8))
+
 # [1.24.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.23.2...v1.24.0) (2025-11-13)
 
 
