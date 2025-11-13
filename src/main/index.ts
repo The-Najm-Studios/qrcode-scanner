@@ -194,19 +194,28 @@ app.whenReady().then(() => {
 
   // QR Scanner IPC handlers
   ipcMain.handle('scanner-status', () => {
-    return qrScanner ? qrScanner.isConnected() : false
+    console.log('[Main IPC] scanner-status requested')
+    const status = qrScanner ? qrScanner.isConnected() : false
+    console.log('[Main IPC] scanner-status response:', status)
+    return status
   })
 
   ipcMain.handle('scanner-reconnect', async () => {
+    console.log('[Main IPC] scanner-reconnect requested')
     if (qrScanner) {
       try {
+        console.log('[Main IPC] Attempting to reconnect scanner...')
         const success = await qrScanner.reconnect()
-        return { success, connected: qrScanner.isConnected() }
+        const connected = qrScanner.isConnected()
+        console.log('[Main IPC] Reconnect result - success:', success, 'connected:', connected)
+        return { success, connected }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        console.error('[Main IPC] scanner-reconnect error:', errorMessage)
         return { success: false, connected: false, error: errorMessage }
       }
     }
+    console.warn('[Main IPC] scanner-reconnect failed - scanner not initialized')
     return { success: false, connected: false, error: 'Scanner not initialized' }
   })
 
@@ -246,13 +255,24 @@ app.whenReady().then(() => {
   })
 
   // Initialize QR Scanner
+  console.log('[Main] Initializing GM60 QR Scanner...')
   qrScanner = new GM60Scanner()
   qrScanner.onScan((data) => {
+    console.log('[Main] 📡 QR data received from scanner:', data)
+    console.log('[Main] 📡 Data type:', typeof data, 'Length:', data.length)
+    console.log('[Main] 🖥️ MainWindow exists:', !!mainWindow)
+    console.log('[Main] 🖥️ MainWindow webContents exists:', !!mainWindow?.webContents)
+    
     // Send scanned data to renderer
     if (mainWindow) {
+      console.log('[Main] 🚀 Sending qr-scanned event to renderer with data:', data)
       mainWindow.webContents.send('qr-scanned', data)
+      console.log('[Main] ✅ qr-scanned event sent successfully')
+    } else {
+      console.error('[Main] ❌ MainWindow is null - cannot send data to renderer!')
     }
   })
+  console.log('[Main] ✅ QR Scanner initialization completed')
 
   createWindow()
 

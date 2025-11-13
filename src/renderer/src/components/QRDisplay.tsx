@@ -18,56 +18,89 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
   const [isListening, setIsListening] = useState<boolean>(false)
 
   useEffect(() => {
+    console.log('[QRDisplay] useEffect triggered - setting up scanner')
+    console.log('[QRDisplay] window.api exists:', !!window.api)
+    console.log('[QRDisplay] window.api.scanner exists:', !!window.api?.scanner)
+    
     checkScannerStatus()
 
     if (window.api?.scanner) {
+      console.log('[QRDisplay] Setting up onQRScanned listener...')
       window.api.scanner.onQRScanned((data: string) => {
-        console.log('QR Code received:', data)
+        console.log('[QRDisplay] 🎉 QR Code received from IPC:', data)
+        console.log('[QRDisplay] 🎉 Data type:', typeof data, 'Length:', data.length)
+        console.log('[QRDisplay] 🎉 Current scan history length:', scanHistory.length)
+        
         const newScan: QRScanData = {
           data: data,
           timestamp: new Date()
         }
-        setScanHistory((prev) => [newScan, ...prev.slice(0, 19)])
+        console.log('[QRDisplay] 📝 Created new scan object:', newScan)
+        
+        setScanHistory((prev) => {
+          console.log('[QRDisplay] 📝 Updating scan history, previous length:', prev.length)
+          const newHistory = [newScan, ...prev.slice(0, 19)]
+          console.log('[QRDisplay] 📝 New scan history length:', newHistory.length)
+          return newHistory
+        })
+        console.log('[QRDisplay] ✅ Scan history update completed')
       })
       setIsListening(true)
+      console.log('[QRDisplay] ✅ QR scan listener registered successfully')
+    } else {
+      console.error('[QRDisplay] ❌ window.api.scanner not available!')
     }
 
     return () => {
+      console.log('[QRDisplay] 🧹 Cleanup - removing QR listeners')
       if (window.api?.scanner) {
         window.api.scanner.removeQRListener()
         setIsListening(false)
+        console.log('[QRDisplay] ✅ QR listeners removed successfully')
       }
     }
   }, [])
 
   const checkScannerStatus = async () => {
+    console.log('[QRDisplay] Checking scanner status...')
     if (window.api?.scanner) {
       try {
+        console.log('[QRDisplay] Calling window.api.scanner.getStatus()')
         const status = await window.api.scanner.getStatus()
+        console.log('[QRDisplay] Scanner status received:', status)
         setScannerStatus(status)
+        console.log('[QRDisplay] Scanner status state updated to:', status)
       } catch (error) {
-        console.error('Failed to check scanner status:', error)
+        console.error('[QRDisplay] Failed to check scanner status:', error)
         setScannerStatus(false)
       }
+    } else {
+      console.error('[QRDisplay] window.api.scanner not available for status check!')
+      setScannerStatus(false)
     }
   }
 
   const reconnectScanner = async () => {
+    console.log('[QRDisplay] Reconnect button clicked')
     if (window.api?.scanner) {
       try {
-        console.log('Attempting to reconnect to GM60 scanner...')
+        console.log('[QRDisplay] Attempting to reconnect to GM60 scanner...')
         const result = await window.api.scanner.reconnect()
+        console.log('[QRDisplay] Reconnect result:', result)
         setScannerStatus(result.connected)
+        console.log('[QRDisplay] Scanner status updated to:', result.connected)
 
         if (result.success) {
-          console.log('Scanner reconnection successful')
+          console.log('[QRDisplay] ✅ Scanner reconnection successful')
         } else {
-          console.warn('Scanner reconnection failed:', result.error)
+          console.warn('[QRDisplay] ❌ Scanner reconnection failed:', result.error)
         }
       } catch (error) {
-        console.error('Failed to reconnect scanner:', error)
+        console.error('[QRDisplay] Failed to reconnect scanner:', error)
         setScannerStatus(false)
       }
+    } else {
+      console.error('[QRDisplay] window.api.scanner not available for reconnect!')
     }
   }
 

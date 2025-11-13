@@ -26,14 +26,32 @@ const api = {
   },
   // QR Scanner API
   scanner: {
-    getStatus: () => ipcRenderer.invoke('scanner-status'),
-    reconnect: () => ipcRenderer.invoke('scanner-reconnect'),
-    sendCommand: (command: string) => ipcRenderer.invoke('scanner-send-command', command),
+    getStatus: () => {
+      console.log('[Preload] scanner.getStatus() called')
+      return ipcRenderer.invoke('scanner-status')
+    },
+    reconnect: () => {
+      console.log('[Preload] scanner.reconnect() called')
+      return ipcRenderer.invoke('scanner-reconnect')
+    },
+    sendCommand: (command: string) => {
+      console.log('[Preload] scanner.sendCommand() called with:', command)
+      return ipcRenderer.invoke('scanner-send-command', command)
+    },
     onQRScanned: (callback: (data: string) => void) => {
-      ipcRenderer.on('qr-scanned', (_event, data) => callback(data))
+      console.log('[Preload] scanner.onQRScanned() callback registered')
+      console.log('[Preload] Callback type:', typeof callback)
+      ipcRenderer.on('qr-scanned', (_event, data) => {
+        console.log('[Preload] 📡 qr-scanned IPC event received:', data)
+        console.log('[Preload] 🚀 Calling renderer callback with data:', data)
+        callback(data)
+        console.log('[Preload] ✅ Renderer callback execution completed')
+      })
     },
     removeQRListener: () => {
+      console.log('[Preload] scanner.removeQRListener() called')
       ipcRenderer.removeAllListeners('qr-scanned')
+      console.log('[Preload] ✅ All qr-scanned listeners removed')
     }
   },
   // Window/Fullscreen API
