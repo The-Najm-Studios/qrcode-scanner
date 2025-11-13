@@ -39,14 +39,25 @@ const api = {
       return ipcRenderer.invoke('scanner-send-command', command)
     },
     onQRScanned: (callback: (data: string) => void) => {
-      console.log('[Preload] scanner.onQRScanned() callback registered')
-      console.log('[Preload] Callback type:', typeof callback)
+      console.log('[Preload] 🎯 scanner.onQRScanned() callback registered')
+      console.log('[Preload] 🎯 Callback type:', typeof callback)
+      console.log('[Preload] 🎯 Setting up IPC listener for "qr-scanned" event...')
+      
       ipcRenderer.on('qr-scanned', (_event, data) => {
-        console.log('[Preload] 📡 qr-scanned IPC event received:', data)
-        console.log('[Preload] 🚀 Calling renderer callback with data:', data)
-        callback(data)
-        console.log('[Preload] ✅ Renderer callback execution completed')
+        console.log('[Preload] �🚨🚨 qr-scanned IPC event received!')
+        console.log('[Preload] 📡 Data:', data)
+        console.log('[Preload] � Event object exists:', !!_event)
+        console.log('[Preload] �🚀 About to call renderer callback...')
+        
+        try {
+          callback(data)
+          console.log('[Preload] ✅ Renderer callback execution completed')
+        } catch (error) {
+          console.error('[Preload] ❌ Error in renderer callback:', error)
+        }
       })
+      
+      console.log('[Preload] ✅ IPC listener setup completed')
     },
     removeQRListener: () => {
       console.log('[Preload] scanner.removeQRListener() called')
