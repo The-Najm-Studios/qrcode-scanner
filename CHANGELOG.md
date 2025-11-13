@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.23.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.22.0...v1.23.0) (2025-11-13)
+
+
+### Features
+
+* enable DevTools for debugging in development mode ([455d3ea](https://github.com/The-Najm-Studios/qrcode-scanner/commit/455d3ea475e48e5d35d846617d43e8296ba891b1))
+
 # [1.22.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.21.0...v1.22.0) (2025-11-13)
 
 
