@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.4](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.3...v1.13.4) (2025-11-13)
+
+
+### Bug Fixes
+
+* install additional dependencies for ARM64 fpm setup ([21d567c](https://github.com/The-Najm-Studios/qrcode-scanner/commit/21d567c120b7bcf7f15f3f53a5e168f3169e321f))
+
 ## [1.13.3](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.2...v1.13.3) (2025-11-13)
 
 
