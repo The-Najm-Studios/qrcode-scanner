@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.23.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.23.1...v1.23.2) (2025-11-13)
+
+
+### Bug Fixes
+
+* change HTTP method to POST and update response handling for registration data ([59f0221](https://github.com/The-Najm-Studios/qrcode-scanner/commit/59f0221d8a1830cbe62b6a67172beb5f55b41608))
+
 ## [1.23.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.23.0...v1.23.1) (2025-11-13)
 
 
