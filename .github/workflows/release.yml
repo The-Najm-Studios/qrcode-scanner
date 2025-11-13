@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Build ARM64 package
-        run: npm run build && npx electron-builder --linux --arm64 --publish always
+        run: npm run build && npx electron-builder --linux deb --arm64 --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -57,7 +57,7 @@ jobs:
         run: npm ci
 
       - name: Build x64 package
-        run: npm run build && npx electron-builder --linux --x64 --publish always
+        run: npm run build && npx electron-builder --linux deb --x64 --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -42,10 +42,7 @@ dmg:
   artifactName: ${name}.${ext}
 linux:
   target:
-    - target: deb
-      arch:
-        - x64
-        - arm64
+    - deb
   maintainer: The-Najm-Studios
   category: Utility
   desktop:
@@ -54,9 +51,6 @@ linux:
     Categories: Utility;Graphics;Photography;
     Keywords: qr;scanner;camera;barcode;
   executableName: qrcode-scanner
-appImage:
-  artifactName: ${name}.${ext}
-  synopsis: QR Code Scanner
 deb:
   artifactName: ${name}-${arch}.${ext}
   synopsis: QR Code Scanner
