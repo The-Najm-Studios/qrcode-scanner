@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.15.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.14.0...v1.15.0) (2025-11-13)
+
+
+### Features
+
+* enhance GM60Scanner logging and add UART diagnostic script ([094d4fb](https://github.com/The-Najm-Studios/qrcode-scanner/commit/094d4fba28942d46214352f3f1abb185f021d708))
+
 # [1.14.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.5...v1.14.0) (2025-11-13)
 
 
