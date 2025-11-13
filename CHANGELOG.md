@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.23.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.23.0...v1.23.1) (2025-11-13)
+
+
+### Bug Fixes
+
+* update Content Security Policy to allow HTTPS images and connections ([8af0eb1](https://github.com/The-Najm-Studios/qrcode-scanner/commit/8af0eb14a9ee1bef73043dc3d9ab84b3b43fdf25))
+
 # [1.23.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.22.0...v1.23.0) (2025-11-13)
 
 
