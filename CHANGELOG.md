@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.18.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.17.0...v1.18.0) (2025-11-13)
+
+
+### Features
+
+* enhance error handling and logging in QR code registration process ([5416b4c](https://github.com/The-Najm-Studios/qrcode-scanner/commit/5416b4c4192edbe227ce7c88624d13555f252628))
+
 # [1.17.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.16.0...v1.17.0) (2025-11-13)
 
 
