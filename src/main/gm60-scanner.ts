@@ -137,20 +137,23 @@ export class GM60Scanner {
           console.log('  📝 ASCII:', JSON.stringify(rawData.toString('ascii')))
           console.log('  📏 Length:', rawData.length, 'bytes')
           console.log('  🕐 Timestamp:', new Date().toISOString())
-          
+
           // Add chunk to buffer
           const chunk = rawData.toString('ascii')
           dataBuffer += chunk
           console.log('  🧩 Buffer now contains:', JSON.stringify(dataBuffer))
-          
+
           // Set timeout to process complete data when chunks stop arriving
           const now = Date.now()
           lastDataTime = now
-          
+
           setTimeout(() => {
             // If no new data arrived in 100ms, process the buffered data
             if (lastDataTime === now && dataBuffer.length > 0) {
-              console.log('[GM60Scanner] 📝 Processing complete buffered data:', JSON.stringify(dataBuffer))
+              console.log(
+                '[GM60Scanner] 📝 Processing complete buffered data:',
+                JSON.stringify(dataBuffer)
+              )
               this.processQRData(dataBuffer.trim())
               dataBuffer = '' // Clear buffer
             }
