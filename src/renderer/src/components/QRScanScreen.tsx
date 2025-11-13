@@ -159,12 +159,13 @@ export function QRScanScreen({
 
   return (
     <>
-      <div className="w-full max-w-sm">
+      <div className="w-full h-full flex flex-col">
         {/* Simple Scan Indicator */}
-        <div className="text-center py-8">
-          <div className="space-y-4">
+        <div className="flex-1 flex flex-col items-center justify-end pb-8">
+          <div className="flex flex-col items-center gap-8">
+            <p className="text-2xl font-medium text-foreground">Scan here</p>
             <svg
-              className="w-16 h-16 mx-auto text-blue-600"
+              className="w-16 h-16 text-blue-600"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -172,13 +173,12 @@ export function QRScanScreen({
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
-            <p className="text-2xl font-medium text-foreground">Scan here</p>
           </div>
         </div>
 
         {/* Development Test Buttons */}
         {process.env.NODE_ENV === 'development' && (
-          <Card className="border-0 shadow-sm bg-yellow-50 mt-4">
+          <Card className="border-0 shadow-sm bg-yellow-50 mx-auto w-full max-w-sm">
             <CardHeader className="pb-2 pt-3 px-4">
               <CardTitle className="text-base text-yellow-800">Development Tools</CardTitle>
               <CardDescription className="text-xs text-yellow-600">
