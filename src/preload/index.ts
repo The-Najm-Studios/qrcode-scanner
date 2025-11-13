@@ -42,13 +42,13 @@ const api = {
       console.log('[Preload] 🎯 scanner.onQRScanned() callback registered')
       console.log('[Preload] 🎯 Callback type:', typeof callback)
       console.log('[Preload] 🎯 Setting up IPC listener for "qr-scanned" event...')
-      
+
       ipcRenderer.on('qr-scanned', (_event, data) => {
         console.log('[Preload] �🚨🚨 qr-scanned IPC event received!')
         console.log('[Preload] 📡 Data:', data)
         console.log('[Preload] � Event object exists:', !!_event)
         console.log('[Preload] �🚀 About to call renderer callback...')
-        
+
         try {
           callback(data)
           console.log('[Preload] ✅ Renderer callback execution completed')
@@ -56,7 +56,7 @@ const api = {
           console.error('[Preload] ❌ Error in renderer callback:', error)
         }
       })
-      
+
       console.log('[Preload] ✅ IPC listener setup completed')
     },
     removeQRListener: () => {
