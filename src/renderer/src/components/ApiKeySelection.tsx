@@ -42,10 +42,6 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
     setApiKeys((prev) => [newApiKey, ...prev])
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString()
-  }
-
   if (isLoading) {
     return (
       <>
@@ -62,7 +58,7 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
   return (
     <>
       <div className="w-full max-w-sm">
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow-sm py-2">
           <CardHeader className="pb-2 pt-3 px-4">
             <CardTitle className="text-base">API Keys</CardTitle>
             <CardDescription className="text-xs">
@@ -85,26 +81,16 @@ export function ApiKeySelection({ onApiKeySelected }: ApiKeySelectionProps): Rea
               </div>
             ) : (
               <>
-                <ScrollArea className="h-40 pr-2">
-                  <div className="space-y-2">
+                <ScrollArea className="pr-2">
+                  <div className="space-y-1.5">
                     {apiKeys.map((apiKey) => (
                       <Card
                         key={apiKey.id}
-                        className="transition-colors hover:bg-muted/50 cursor-pointer border-0 shadow-none bg-muted/20"
+                        className="transition-colors hover:bg-muted/50 cursor-pointer border-0 shadow-none bg-muted/20 py-2"
                         onClick={() => onApiKeySelected(apiKey)}
                       >
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <div className="space-y-0.5 min-w-0 flex-1">
-                              <div className="text-sm font-medium truncate">{apiKey.name}</div>
-                              <div className="text-xs text-muted-foreground">
-                                {formatDate(apiKey.created_at)}
-                              </div>
-                            </div>
-                            <div className="text-xs text-muted-foreground font-mono ml-2">
-                              {apiKey.value.substring(0, 6)}...
-                            </div>
-                          </div>
+                        <CardContent>
+                          <div className="text-sm font-medium truncate">{apiKey.name}</div>
                         </CardContent>
                       </Card>
                     ))}

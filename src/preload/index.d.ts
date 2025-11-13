@@ -55,6 +55,8 @@ interface WindowAPI {
   toggleFullscreen: () => Promise<boolean>
   setFullscreen: (fullscreen: boolean) => Promise<boolean>
   isFullscreen: () => Promise<boolean>
+  toggleMaximize: () => Promise<boolean>
+  isMaximized: () => Promise<boolean>
 }
 
 interface ApiKey {

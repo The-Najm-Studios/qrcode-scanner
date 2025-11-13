@@ -69,7 +69,9 @@ const api = {
   window: {
     toggleFullscreen: () => ipcRenderer.invoke('toggle-fullscreen'),
     setFullscreen: (fullscreen: boolean) => ipcRenderer.invoke('set-fullscreen', fullscreen),
-    isFullscreen: () => ipcRenderer.invoke('is-fullscreen')
+    isFullscreen: () => ipcRenderer.invoke('is-fullscreen'),
+    toggleMaximize: () => ipcRenderer.invoke('toggle-maximize'),
+    isMaximized: () => ipcRenderer.invoke('is-maximized')
   },
   // Database API for API keys
   apiKeys: {

@@ -293,6 +293,24 @@ app.whenReady().then(() => {
     return mainWindow ? mainWindow.isFullScreen() : false
   })
 
+  // Window maximize/minimize IPC handlers
+  ipcMain.handle('toggle-maximize', () => {
+    if (mainWindow) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize()
+        return false
+      } else {
+        mainWindow.maximize()
+        return true
+      }
+    }
+    return false
+  })
+
+  ipcMain.handle('is-maximized', () => {
+    return mainWindow ? mainWindow.isMaximized() : false
+  })
+
   // Database IPC handlers for API keys
   ipcMain.handle('apiKeys:list', async () => {
     try {

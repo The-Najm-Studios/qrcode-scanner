@@ -24,9 +24,15 @@ const UpdateNotification = () => {
   const [updateReady, setUpdateReady] = useState(false)
   const [installing, setInstalling] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isMaximized, setIsMaximized] = useState(false)
 
   useEffect(() => {
     if (!window.api?.updater) return
+
+    // Check initial maximize state
+    if (window.api?.window) {
+      window.api.window.isMaximized().then(setIsMaximized)
+    }
 
     window.api.updater.onUpdateAvailable((info: UpdateInfo) => {
       setUpdateAvailable(true)
@@ -85,6 +91,15 @@ const UpdateNotification = () => {
       await window.api.updater.checkForUpdates()
     } catch (err) {
       setError('Failed to check for updates')
+    }
+  }
+
+  const handleToggleMaximize = async () => {
+    try {
+      const maximized = await window.api.window.toggleMaximize()
+      setIsMaximized(maximized)
+    } catch (err) {
+      console.error('Failed to toggle maximize:', err)
     }
   }
 
@@ -200,7 +215,7 @@ const UpdateNotification = () => {
   }
 
   return (
-    <div className="fixed top-2 left-2 z-50">
+    <div className="fixed top-2 left-2 z-50 flex gap-1">
       <Button
         onClick={handleCheckForUpdates}
         variant="outline"
@@ -208,6 +223,15 @@ const UpdateNotification = () => {
         className="h-5 px-2 text-[7px]"
       >
         Check for Updates
+      </Button>
+      <Button
+        onClick={handleToggleMaximize}
+        variant="outline"
+        size="sm"
+        className="h-5 px-2 text-[7px]"
+        title={isMaximized ? 'Restore' : 'Maximize'}
+      >
+        {isMaximized ? '🗗' : '🗖'}
       </Button>
     </div>
   )
