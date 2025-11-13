@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.19.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.18.0...v1.19.0) (2025-11-13)
+
+
+### Features
+
+* initialize QR scanner after main window is ready and enhance logging for QR scanning process ([b2b37c7](https://github.com/The-Najm-Studios/qrcode-scanner/commit/b2b37c766b84fe7f872f0afce83aa19341ea8dfe))
+
 # [1.18.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.17.0...v1.18.0) (2025-11-13)
 
 
