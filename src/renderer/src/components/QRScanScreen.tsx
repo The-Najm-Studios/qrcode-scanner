@@ -32,7 +32,7 @@ export function QRScanScreen({
       console.log('🔍 Attempting to parse URL:', qrData.trim())
       const url = new URL(qrData.trim())
       console.log('✅ URL parsed successfully. Protocol:', url.protocol)
-      
+
       if (!url.protocol.startsWith('https:')) {
         console.error('❌ FAILURE POINT 1: Protocol is not HTTPS. Protocol:', url.protocol)
         onRegistrationError('Only HTTPS URLs are allowed - Protocol: ' + url.protocol)
@@ -138,7 +138,7 @@ export function QRScanScreen({
     console.log('[QRScanScreen] window.api exists:', !!window.api)
     console.log('[QRScanScreen] window.api.scanner exists:', !!window.api?.scanner)
     console.log('[QRScanScreen] apiKey:', apiKey.name)
-    
+
     // Set up QR scanner listener
     if (window.api?.scanner) {
       console.log('[QRScanScreen] Registering onQRScanned callback...')

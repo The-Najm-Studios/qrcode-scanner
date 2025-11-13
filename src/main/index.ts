@@ -103,7 +103,7 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    
+
     // Initialize QR Scanner after window is ready
     console.log('[Main] Window ready - Initializing GM60 QR Scanner...')
     qrScanner = new GM60Scanner()
