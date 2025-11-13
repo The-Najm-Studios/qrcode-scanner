@@ -262,7 +262,7 @@ app.whenReady().then(() => {
     console.log('[Main] 📡 Data type:', typeof data, 'Length:', data.length)
     console.log('[Main] 🖥️ MainWindow exists:', !!mainWindow)
     console.log('[Main] 🖥️ MainWindow webContents exists:', !!mainWindow?.webContents)
-    
+
     // Send scanned data to renderer
     if (mainWindow) {
       console.log('[Main] 🚀 Sending qr-scanned event to renderer with data:', data)

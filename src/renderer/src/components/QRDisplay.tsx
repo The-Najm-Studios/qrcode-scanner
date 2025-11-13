@@ -21,7 +21,7 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
     console.log('[QRDisplay] useEffect triggered - setting up scanner')
     console.log('[QRDisplay] window.api exists:', !!window.api)
     console.log('[QRDisplay] window.api.scanner exists:', !!window.api?.scanner)
-    
+
     checkScannerStatus()
 
     if (window.api?.scanner) {
@@ -30,13 +30,13 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
         console.log('[QRDisplay] 🎉 QR Code received from IPC:', data)
         console.log('[QRDisplay] 🎉 Data type:', typeof data, 'Length:', data.length)
         console.log('[QRDisplay] 🎉 Current scan history length:', scanHistory.length)
-        
+
         const newScan: QRScanData = {
           data: data,
           timestamp: new Date()
         }
         console.log('[QRDisplay] 📝 Created new scan object:', newScan)
-        
+
         setScanHistory((prev) => {
           console.log('[QRDisplay] 📝 Updating scan history, previous length:', prev.length)
           const newHistory = [newScan, ...prev.slice(0, 19)]
@@ -143,7 +143,9 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
         <div className="space-y-1">
           <h2 className="text-[11px] font-semibold text-foreground">📱 GM60 Scanner</h2>
           <div className="flex items-center gap-1">
-            <div className={`w-1.5 h-1.5 rounded-full ${scannerStatus ? 'bg-green-500' : 'bg-red-500'}`}></div>
+            <div
+              className={`w-1.5 h-1.5 rounded-full ${scannerStatus ? 'bg-green-500' : 'bg-red-500'}`}
+            ></div>
             <span className={`text-[9px] ${scannerStatus ? 'text-green-600' : 'text-red-600'}`}>
               {scannerStatus ? 'Connected' : 'Disconnected'}
             </span>
@@ -151,11 +153,7 @@ const QRDisplay = ({ activeTab }: QRDisplayProps) => {
           <div className="text-[9px] text-muted-foreground">
             {isListening ? '🎧 Listening...' : '❌ Not listening'}
           </div>
-          <Button
-            onClick={reconnectScanner}
-            size="sm"
-            className="h-5 px-2 text-[8px] mt-1"
-          >
+          <Button onClick={reconnectScanner} size="sm" className="h-5 px-2 text-[8px] mt-1">
             🔄 {scannerStatus ? 'Refresh' : 'Reconnect'}
           </Button>
         </div>

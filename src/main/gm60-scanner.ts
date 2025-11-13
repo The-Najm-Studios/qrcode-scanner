@@ -30,7 +30,10 @@ export class GM60Scanner {
         console.log('[GM60Scanner] Attempting to list available serial ports...')
         const { SerialPort } = await import('serialport')
         const ports = await SerialPort.list()
-        console.log('[GM60Scanner] Available serial ports:', ports.map(p => ({ path: p.path, manufacturer: p.manufacturer })))
+        console.log(
+          '[GM60Scanner] Available serial ports:',
+          ports.map((p) => ({ path: p.path, manufacturer: p.manufacturer }))
+        )
 
         for (const path of possiblePaths) {
           const exists = ports.some((port) => port.path === path)
@@ -100,7 +103,9 @@ export class GM60Scanner {
 
         if (err.message.includes('No such file or directory')) {
           console.warn('[GM60Scanner] UART device not found. For hardwired GM60:')
-          console.warn('[GM60Scanner] 1. Enable UART: sudo raspi-config -> Interface Options -> Serial')
+          console.warn(
+            '[GM60Scanner] 1. Enable UART: sudo raspi-config -> Interface Options -> Serial'
+          )
           console.warn('[GM60Scanner] 2. Disable console: Login shell over serial = NO')
           console.warn('[GM60Scanner] 3. Enable hardware: Serial port hardware = YES')
           console.warn('[GM60Scanner] 4. Add to /boot/config.txt: enable_uart=1')
@@ -119,8 +124,10 @@ export class GM60Scanner {
         console.log(`[GM60Scanner] 📡 Data type: ${typeof data}, length: ${data.toString().length}`)
         const scannedData = data.toString().trim()
         console.log(`[GM60Scanner] 📝 Trimmed data: "${scannedData}"`)
-        console.log(`[GM60Scanner] 🎯 Callback status: ${this.onDataCallback ? 'registered' : 'NOT REGISTERED'}`)
-        
+        console.log(
+          `[GM60Scanner] 🎯 Callback status: ${this.onDataCallback ? 'registered' : 'NOT REGISTERED'}`
+        )
+
         if (scannedData && this.onDataCallback) {
           console.log('[GM60Scanner] 🚀 Calling onDataCallback with scanned data:', scannedData)
           this.onDataCallback(scannedData)
@@ -138,7 +145,9 @@ export class GM60Scanner {
       // Set a timeout for connection
       setTimeout(() => {
         if (!this.port?.isOpen) {
-          console.error(`[GM60Scanner] ⏰ Connection timeout - failed to connect to ${portPath} within 2 seconds`)
+          console.error(
+            `[GM60Scanner] ⏰ Connection timeout - failed to connect to ${portPath} within 2 seconds`
+          )
           reject(new Error(`Failed to connect to ${portPath} within timeout`))
         } else {
           console.log(`[GM60Scanner] ✅ Connection established within timeout window`)
