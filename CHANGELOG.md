@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.14.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.5...v1.14.0) (2025-11-13)
+
+
+### Features
+
+* enhance logging for GM60 scanner initialization and IPC communication ([555630b](https://github.com/The-Najm-Studios/qrcode-scanner/commit/555630b016f33456c961abef632da31146ec496a))
+
 ## [1.13.5](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.4...v1.13.5) (2025-11-13)
 
 
