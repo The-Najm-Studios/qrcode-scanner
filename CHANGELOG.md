@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.1...v1.13.2) (2025-11-13)
+
+
+### Bug Fixes
+
+* correct architecture label for ARM64 build job ([d3a486f](https://github.com/The-Najm-Studios/qrcode-scanner/commit/d3a486ff35cb880464a156e5ca04395a0e4808fd))
+
 ## [1.13.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.0...v1.13.1) (2025-11-13)
 
 
