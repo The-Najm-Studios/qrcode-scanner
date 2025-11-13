@@ -103,13 +103,13 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    
+
     // Open DevTools in development mode to see renderer logs
     if (is.dev) {
       mainWindow.webContents.openDevTools()
       console.log('[Main] 🔧 DevTools opened for debugging renderer logs')
     }
-    
+
     // Initialize QR Scanner after window is ready
     console.log('[Main] Window ready - Initializing GM60 QR Scanner...')
     qrScanner = new GM60Scanner()
@@ -150,10 +150,7 @@ function createWindow(): void {
   // Force enable DevTools keyboard shortcuts
   mainWindow.webContents.on('before-input-event', (_event, input) => {
     // Enable Ctrl+Shift+I or F12 to open DevTools
-    if (
-      (input.control && input.shift && input.key.toLowerCase() === 'i') ||
-      input.key === 'F12'
-    ) {
+    if ((input.control && input.shift && input.key.toLowerCase() === 'i') || input.key === 'F12') {
       mainWindow.webContents.toggleDevTools()
     }
   })
