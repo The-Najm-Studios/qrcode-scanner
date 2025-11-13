@@ -26,37 +26,17 @@ export function SuccessScreen({ firstName, lastName }: SuccessScreenProps): Reac
   return (
     <>
       <div className="w-full max-w-sm">
-        <Card className="text-center border-0 shadow-sm">
-          <CardHeader className="pb-3 pt-4 px-4">
-            <div className="flex justify-center mb-2">
-              <CheckCircle className="h-12 w-12 text-green-500" />
-            </div>
-            <CardTitle className="text-base text-green-700">Registration Successful!</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 px-4 pb-4">
-            <div className="space-y-1">
-              <p className="text-sm">
-                <strong>
-                  {firstName} {lastName}
-                </strong>{' '}
-                has been registered.
-              </p>
-              <p className="text-muted-foreground text-xs">
-                Welcome, {firstName} {lastName}!
+        <div className="text-center py-8">
+          <div className="space-y-6">
+            <CheckCircle className="h-24 w-24 text-green-500 mx-auto" />
+            <div className="space-y-2">
+              <p className="text-xl font-medium text-green-700">Success!</p>
+              <p className="text-3xl font-bold text-foreground">
+                {firstName} {lastName}
               </p>
             </div>
-
-            {/* Countdown Timer */}
-            <div className="flex items-center justify-center space-x-2 pt-2">
-              <div className="w-6 h-6 rounded-full border-2 border-blue-500 flex items-center justify-center">
-                <span className="text-xs font-bold text-blue-600">{countdown}</span>
-              </div>
-              <span className="text-xs text-muted-foreground">
-                {countdown > 0 ? 'Returning to scanner...' : 'Redirecting...'}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
       <VersionDisplay />
     </>
