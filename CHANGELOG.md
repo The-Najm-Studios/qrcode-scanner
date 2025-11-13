@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.0...v1.13.1) (2025-11-13)
+
+
+### Bug Fixes
+
+* remove redundant steps in update-release job ([bb70463](https://github.com/The-Najm-Studios/qrcode-scanner/commit/bb704634a0f16be11a5f2c8fa308492eae117789))
+
 # [1.13.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.12.0...v1.13.0) (2025-11-13)
 
 
