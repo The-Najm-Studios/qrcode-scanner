@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.3](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.2...v1.13.3) (2025-11-13)
+
+
+### Bug Fixes
+
+* specify deb target for ARM64 and x64 builds in electron-builder configuration ([45e0859](https://github.com/The-Najm-Studios/qrcode-scanner/commit/45e085902d9451c357010aa503674ace79ecf166))
+
 ## [1.13.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.13.1...v1.13.2) (2025-11-13)
 
 
