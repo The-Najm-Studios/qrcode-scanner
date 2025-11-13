@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.24.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.24.1...v1.24.2) (2025-11-13)
+
+
+### Bug Fixes
+
+* update QRScanScreen and ResultScreens for improved UI and user experience ([dd45b76](https://github.com/The-Najm-Studios/qrcode-scanner/commit/dd45b76173ca7405135e638de580c779b0329011))
+
 ## [1.24.1](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.24.0...v1.24.1) (2025-11-13)
 
 
