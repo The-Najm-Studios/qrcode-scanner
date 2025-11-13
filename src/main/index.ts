@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
 import { GM60Scanner } from './gm60-scanner'
+import { DatabaseService } from './database'
 import icon from '../../resources/icon.png?asset'
 
 // Configure auto-updater
@@ -10,6 +11,7 @@ autoUpdater.checkForUpdatesAndNotify()
 
 let mainWindow: BrowserWindow
 let qrScanner: GM60Scanner
+let dbService: DatabaseService
 
 // Auto-updater events
 autoUpdater.on('checking-for-update', () => {
@@ -88,8 +90,8 @@ autoUpdater.on('update-downloaded', (info) => {
 function createWindow(): void {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1000,
+    height: 700,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -254,6 +256,32 @@ app.whenReady().then(() => {
     return mainWindow ? mainWindow.isFullScreen() : false
   })
 
+  // Database IPC handlers for API keys
+  ipcMain.handle('apiKeys:list', async () => {
+    try {
+      return dbService.getAllApiKeys()
+    } catch (error) {
+      console.error('Error fetching API keys:', error)
+      return []
+    }
+  })
+
+  ipcMain.handle('apiKeys:create', async (_, name: string, value: string) => {
+    try {
+      return dbService.createApiKey(name, value)
+    } catch (error) {
+      console.error('Error creating API key:', error)
+      throw error
+    }
+  })
+
+  ipcMain.handle('app:getVersion', () => {
+    return app.getVersion()
+  })
+
+  // Initialize database service
+  dbService = DatabaseService.getInstance()
+
   // Initialize QR Scanner
   console.log('[Main] Initializing GM60 QR Scanner...')
   qrScanner = new GM60Scanner()
@@ -297,6 +325,11 @@ app.on('window-all-closed', async () => {
   // Cleanup QR scanner
   if (qrScanner) {
     await qrScanner.disconnect()
+  }
+
+  // Cleanup database
+  if (dbService) {
+    dbService.close()
   }
 
   if (process.platform !== 'darwin') {

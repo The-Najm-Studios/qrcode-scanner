@@ -57,6 +57,22 @@ interface WindowAPI {
   isFullscreen: () => Promise<boolean>
 }
 
+interface ApiKey {
+  id: number
+  name: string
+  value: string
+  created_at: string
+}
+
+interface ApiKeysAPI {
+  getAll: () => Promise<ApiKey[]>
+  create: (name: string, value: string) => Promise<ApiKey>
+}
+
+interface AppAPI {
+  getVersion: () => Promise<string>
+}
+
 declare global {
   interface Window {
     electron: ElectronAPI
@@ -64,6 +80,8 @@ declare global {
       updater: UpdaterAPI
       scanner: ScannerAPI
       window: WindowAPI
+      apiKeys: ApiKeysAPI
+      app: AppAPI
     }
   }
 }

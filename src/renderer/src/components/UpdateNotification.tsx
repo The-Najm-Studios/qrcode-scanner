@@ -200,7 +200,7 @@ const UpdateNotification = () => {
   }
 
   return (
-    <div className="relative p-2">
+    <div className="fixed top-2 left-2 z-50">
       <Button
         onClick={handleCheckForUpdates}
         variant="outline"
