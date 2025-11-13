@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.24.0](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.23.2...v1.24.0) (2025-11-13)
+
+
+### Features
+
+* add maximize/minimize functionality and update UI components ([c2b40c2](https://github.com/The-Najm-Studios/qrcode-scanner/commit/c2b40c2aee3621e5743ec9c05b9ccc3b6f70e1a7))
+
 ## [1.23.2](https://github.com/The-Najm-Studios/qrcode-scanner/compare/v1.23.1...v1.23.2) (2025-11-13)
 
 
